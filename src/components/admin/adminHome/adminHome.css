@@ -1,0 +1,27 @@
+/* .asideContainer{
+    width: 20%;
+    height: 60vh;
+    background-color: aqua;
+}
+
+.asideLinks{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+} */
+
+#overview{
+    background-color: blue;
+    height: 200px;
+}
+
+#accommodations{
+    background-color: blueviolet;
+    height: 200px;
+}
+
+#reservations{
+    background-color: brown;
+    height: 200px;
+}

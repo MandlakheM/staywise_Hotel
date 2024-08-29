@@ -10,7 +10,7 @@ import Login from "./components/login";
 import SignUp from "./components/signup";
 import UserDetails from "./components/userDetails";
 import Navbar from "./components/navBar";
-import AdminHome from "./components/adminHome";
+import AdminHome from "./components/admin/adminHome/adminHome";
 import Booking from "./components/booking";
 import About from "./components/about";
 import Home from "./components/home";
