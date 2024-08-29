@@ -1,52 +1,62 @@
-import React from "react";
-import { useState } from "react";
-import { Link } from "react-router-dom";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../config/firebase";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from "react";
 
 function Login() {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const navigate = useNavigate();
+  function handleSubmit(e) {
+    e.preventDefault();
 
-  function handleLogin() {
-    signInWithEmailAndPassword(auth, username, password)
-      .then(() => {
-        navigate("/home");
-      })
-      .catch((err) => {
-        console.log(err.message);
-      });
+    const data = {
+      email,
+      userType: email === "admin@example.com" ? "Admin" : "User", 
+    };
+
+    localStorage.setItem("loggedIn", true);
+    localStorage.setItem("userType", data.userType);
+
+    if (data.userType === "Admin") {
+      window.location.href = "/admin-dashboard";
+    } else {
+      window.location.href = "/userDetails";
+    }
   }
 
   return (
-    <form onSubmit={handleLogin}>
-      <div className="auth">
+    <div>
+      <form onSubmit={handleSubmit}>
+        <h3>Login</h3>
+
+        <div>
+          <label>Email address</label>
+          <input
+            type="email"
+            placeholder="Enter email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+        </div>
+
+        <div>
+          <label>Password</label>
+          <input
+            type="password"
+            placeholder="Enter password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+        </div>
+
+        <div>
+          <button type="submit">Submit</button>
+        </div>
         <p>
-          <b>Log In</b>
+          <a href="/register">Register</a>
         </p>
-        <input
-          type="email"
-          name="username"
-          id=""
-          placeholder="Email"
-          onChange={(e) => setUsername(e.target.value)}
-        />
-        <input
-          type="password"
-          name="password"
-          id=""
-          placeholder="password"
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <button type="submit">Log In</button>
-        <p>
-          Dont have an account? <Link to={"/signup"}>Sign Up</Link>
-        </p>
-      </div>
-    </form>
+      </form>
+    </div>
   );
 }
 
