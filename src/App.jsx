@@ -6,15 +6,15 @@ import {
   Navigate,
 } from "react-router-dom";
 import "./App.css";
-import Login from "./components/login";
-import SignUp from "./components/signup";
-import UserDetails from "./components/userDetails";
-import Navbar from "./components/navBar";
+import Login from "./components/auth/login";
+import SignUp from "./components/auth/signup";
+import UserDetails from "./components/userUI/userProfile/userDetails";
+import Navbar from "./components/userUI/header/navBar";
 import AdminHome from "./components/admin/adminHome/adminHome";
-import Booking from "./components/booking";
+import Booking from "./components/userUI/rooms/booking";
 import About from "./components/about";
-import Home from "./components/home";
-import ProtectedRoute from "./components/protectedRoute";
+import Home from "./components/userUI/home/home";
+import ProtectedRoute from "./components/router/protectedRoute";
 
 function App() {
   const isLoggedIn = localStorage.getItem("loggedIn");

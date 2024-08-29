@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from "react";
 import "./adminHome.css";
+import Overview from "../overview/overview";
+import Accommodation from "../accomodationList/accommodation";
+import Reservations from "../reservations/reservations";
 
 function AdminHome({}) {
   const logOut = () => {
@@ -7,15 +10,26 @@ function AdminHome({}) {
     window.location.href = "./login";
   };
 
+  const display = (page) => {
+    switch (page) {
+      case "overview":
+        return <Overview />;
+      case "accommodations":
+        return <Accommodation />;
+      case "reservations":
+        return <Reservations />;
+    }
+  };
+
+  // console.log(display("overview"))
+
   return (
     <div>
-      <div>
-        <h3>Welcome Admin</h3>
+      <h3>Welcome Admin</h3>
+      {/* <button>add new room</button> */}
+      <button onClick={logOut}>Log Out</button>
 
-        {/* <button>add new room</button> */}
-
-        <button onClick={logOut}>Log Out</button>
-
+      <div className="adminContainer">
         <div className="asideContainer">
           <aside>
             <header>
@@ -26,13 +40,17 @@ function AdminHome({}) {
             <nav>
               <ul className="asideLinks">
                 <li>
-                  <a href="#overview">Dashboard</a>
+                  <button onClick={display("overview")}>Dashboard</button>
                 </li>
                 <li>
-                  <a href="#accommodations">Accommodations</a>
+                  <button onClick={display("accommodations")}>
+                    Accommodations
+                  </button>
                 </li>
                 <li>
-                  <a href="#reservations">Reservations</a>
+                  <button onClick={display("reservations")}>
+                    Reservations
+                  </button>
                 </li>
                 <li>
                   <a href="#settings">Settings</a>
@@ -43,13 +61,13 @@ function AdminHome({}) {
               </ul>
             </nav>
           </aside>
-          <main>
-            <section id="overview"></section>
-            <section id="accommodations"></section>
-            <section id="reservations"></section>
-            <section id="settings"></section>
-          </main>
         </div>
+        <main>
+          {display("reservations")}
+          {/* <Overview />
+          <Accommodation />
+          <Reservations /> */}
+        </main>
       </div>
     </div>
   );
