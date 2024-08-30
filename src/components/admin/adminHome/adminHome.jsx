@@ -1,33 +1,34 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "./adminHome.css";
 import Overview from "../overview/overview";
 import Accommodation from "../accomodationList/accommodation";
 import Reservations from "../reservations/reservations";
 
-function AdminHome({}) {
+function AdminHome() {
+  const [currentPage, setCurrentPage] = useState("overview");
+
   const logOut = () => {
     localStorage.clear();
     window.location.href = "./login";
   };
 
-  const display = (page) => {
-    switch (page) {
+  const display = () => {
+    switch (currentPage) {
       case "overview":
         return <Overview />;
       case "accommodations":
         return <Accommodation />;
       case "reservations":
         return <Reservations />;
+      default:
+        return <Overview />;
     }
   };
-
-  // console.log(display("overview"))
 
   return (
     <div>
       <h3>Welcome Admin</h3>
-      {/* <button>add new room</button> */}
-      <button onClick={logOut}>Log Out</button>
+      {/* <button onClick={logOut}>Log Out</button> */}
 
       <div className="adminContainer">
         <div className="asideContainer">
@@ -40,34 +41,28 @@ function AdminHome({}) {
             <nav>
               <ul className="asideLinks">
                 <li>
-                  <button onClick={display("overview")}>Dashboard</button>
+                  <button onClick={() => setCurrentPage("overview")}>
+                    Dashboard
+                  </button>
                 </li>
                 <li>
-                  <button onClick={display("accommodations")}>
+                  <button onClick={() => setCurrentPage("accommodations")}>
                     Accommodations
                   </button>
                 </li>
                 <li>
-                  <button onClick={display("reservations")}>
+                  <button onClick={() => setCurrentPage("reservations")}>
                     Reservations
                   </button>
                 </li>
                 <li>
-                  <a href="#settings">Settings</a>
-                </li>
-                <li>
-                  <a href="#logout">Logout</a>
+                  <button onClick={logOut}>Log Out</button>
                 </li>
               </ul>
             </nav>
           </aside>
         </div>
-        <main>
-          {display("reservations")}
-          {/* <Overview />
-          <Accommodation />
-          <Reservations /> */}
-        </main>
+        <main>{display()}</main>
       </div>
     </div>
   );
