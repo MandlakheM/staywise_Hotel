@@ -20,8 +20,8 @@ function AdminHome() {
         return <Accommodation />;
       case "reservations":
         return <Reservations />;
-      default:
-        return <Overview />;
+      // default:
+      //   return <Overview />;
     }
   };
 

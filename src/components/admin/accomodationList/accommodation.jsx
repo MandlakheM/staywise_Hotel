@@ -1,12 +1,45 @@
 import React from "react";
-import "./accommodation.css"
+import "./accommodation.css";
+import { connect } from "react-redux";
 
-function accommodation() {
+function Accommodation({ accom }) {
+  console.log(accom);
+
   return (
     <main>
-      <div className="accommodations">accommodations</div>
+      <div className="accommodations">
+        {" "}
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Price</th>
+              <th>Rating</th>
+              <th>Address</th>
+            </tr>
+          </thead>
+          <tbody>
+            {accom.map((place) => (
+              <tr key={place.id}>
+                <td>{place.id}</td>
+                <td>{place.accomName}</td>
+                <td>{place.price}</td>
+                <td>{place.rating}</td>
+                <td>{place.address}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </main>
   );
 }
 
-export default accommodation;
+const stateToProps = (state) => {
+  return {
+    accom: state.accommodation.places,
+  };
+};
+
+export default connect(stateToProps)(Accommodation);

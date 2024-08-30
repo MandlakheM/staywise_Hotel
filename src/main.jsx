@@ -2,11 +2,9 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import App from "./App.jsx";
 import "./index.css";
-import { createStore } from "redux";
-import rootReducer from "./Redux/reducers/rootReducer.jsx";
+import store from "./Redux/store/store.jsx";
 import { Provider } from "react-redux";
 
-const store = createStore(rootReducer);
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
