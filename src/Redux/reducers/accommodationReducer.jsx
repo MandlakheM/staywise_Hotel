@@ -1,4 +1,4 @@
-import { CREATE_ACCOMMODATION } from "../actionTypes/actionType";
+import { CREATE_ACCOMMODATION, CREATE_ACCOMMODATION_FAILED } from "../actionTypes/actionType";
 
 const initialState = {
   places: [
@@ -37,6 +37,8 @@ const accommodationReducer = (state = initialState, action) => {
         ...state,
         places: [...state.places, action.accom],
       };
+      case CREATE_ACCOMMODATION_FAILED:
+        return console.log(error, action.error)
     default:
       return state;
   }
