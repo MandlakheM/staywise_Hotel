@@ -7,6 +7,29 @@ function Navbar({ isLoggedIn, userType }) {
     <nav className="nav">
       <ul>
         <li></li>
+
+        <li>
+          <Link to="/home">Home</Link>
+        </li>
+        <li>
+          <Link to="/about">About</Link>
+        </li>
+        {isLoggedIn && userType == "Admin" ? (
+          <li>
+            <Link to="/admin-dashboard">Dashboard</Link>
+          </li>
+        ) : (
+          isLoggedIn && (
+            <>
+              <li>
+                <Link to="/booking">Booking</Link>
+              </li>
+              <li>
+                <Link to="/userDetails">User Details</Link>
+              </li>
+            </>
+          )
+        )}
         {!isLoggedIn && (
           <>
             <li>
@@ -17,30 +40,6 @@ function Navbar({ isLoggedIn, userType }) {
             </li>
           </>
         )}
-        {isLoggedIn && userType == "Admin" ? (
-          <li>
-            <Link to="/admin-dashboard">Dashboard</Link>
-          </li>
-        ) : (
-          isLoggedIn && (
-            <>
-              <li>
-                <Link to="/userDetails">User Details</Link>
-              </li>
-
-              <li>
-                <Link to="/booking">Booking</Link>
-              </li>
-            </>
-          )
-        )}
-
-        <li>
-          <Link to="/about">About</Link>
-        </li>
-        <li>
-          <Link to="/home">Home</Link>
-        </li>
       </ul>
     </nav>
   );

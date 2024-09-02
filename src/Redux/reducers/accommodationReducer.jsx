@@ -28,6 +28,10 @@ const initialState = {
 };
 
 const accommodationReducer = (state = initialState, action) => {
+  switch (action.type){
+    case 'CREATE_ACCOMMODATION':
+    console.log('created accom listing', action.accom)
+  }
   return state;
 };
 

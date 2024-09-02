@@ -1,0 +1,163 @@
+
+.modal,
+.overlay {
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  position: fixed;
+  overflow: hidden;
+}
+
+.overlay {
+  background: rgba(49, 49, 49, 0.8);
+}
+
+.modalContent {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  line-height: 0.4;
+  background: #f1f1f1;
+  padding: 14px 28px;
+  border-radius: 3px;
+  max-width: 600px;
+  min-width: 300px;
+  max-height: 80vh;
+  /* display: flex; */
+  /* justify-content: space-around; */
+  /* align-items: center; */
+  overflow-y: scroll;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.closeModal {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 5px 7px;
+  color: red;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.wrap-input-9 .input {
+  width: 100%;
+  box-sizing: border-box;
+  letter-spacing: 1px;
+  background-color: #f5f6fd;
+  border: 1px solid #ccc;
+  padding: 7px 14px 9px;
+  transition: 0.4s;
+}
+
+.wrap-input-9 .input:focus {
+  outline: none;
+}
+
+.wrap-input-9 {
+  width: 80%;
+  /* margin: 4px 3%; */
+  position: relative;
+}
+
+.wrap-input-9 .input ~ .focus-border:before,
+.wrap-input-9 .input ~ .focus-border:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 0;
+  height: 2px;
+  background-color: #6c5dd3;
+  transition: 0.2s;
+  transition-delay: 0.2s;
+}
+
+.wrap-input-9 .input ~ .focus-border:after {
+  top: auto;
+  bottom: 0;
+  right: auto;
+  left: 0;
+  transition-delay: 0.6s;
+}
+
+.wrap-input-9 .input ~ .focus-border i:before,
+.wrap-input-9 .input ~ .focus-border i:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 2px;
+  height: 0;
+  background-color: #6c5dd3;
+  transition: 0.2s;
+}
+
+.wrap-input-9 .input ~ .focus-border i:after {
+  left: auto;
+  right: 0;
+  top: auto;
+  bottom: 0;
+  transition-delay: 0.4s;
+}
+
+.wrap-input-9 .input:focus ~ .focus-border:before,
+.wrap-input-9 .input:focus ~ .focus-border:after {
+  width: 100%;
+  transition: 0.2s;
+  transition-delay: 0.6s;
+}
+
+.wrap-input-9 .input:focus ~ .focus-border:after {
+  transition-delay: 0.2s;
+}
+
+.wrap-input-9 .input:focus ~ .focus-border i:before,
+.wrap-input-9 .input:focus ~ .focus-border i:after {
+  height: 100%;
+  transition: 0.2s;
+}
+
+.wrap-input-9 .input:focus ~ .focus-border i:after {
+  transition-delay: 0.4s;
+}
+
+#edit {
+  background-color: yellow;
+  border-radius: 10px;
+  border: none;
+  height: 2rem;
+  font-size: 1em;
+  cursor: pointer;
+
+}
+
+#delete {
+  background-color: red;
+  border-radius: 10px;
+  border: none;
+  height: 2rem;
+  font-size: 1em;
+  color: white;
+  cursor: pointer;
+
+}
+
+#add{
+    background-color: yellowgreen;
+    border-radius: 10px;
+    border: none;
+    height: 2rem;
+    font-size: 1em;
+    color: white;
+    cursor: pointer;
+}

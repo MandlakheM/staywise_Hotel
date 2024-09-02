@@ -1,9 +1,22 @@
 import React from "react";
+import { useState } from "react";
 import "./accommodation.css";
+import AddRoomModal from "./addRoomModal";
 import { connect } from "react-redux";
+import { createAccom } from "../../../Redux/actions/accomActions";
 
 function Accommodation({ accom }) {
+  const [modal, setModal] = useState(false);
+
   console.log(accom);
+
+  const activateModal = () => {
+    setModal(true);
+  };
+
+  const deactivateModal = () => {
+    setModal(false);
+  };
 
   return (
     <main>
@@ -31,6 +44,10 @@ function Accommodation({ accom }) {
             ))}
           </tbody>
         </table>
+        <button type="button" onClick={activateModal}>
+          add room
+        </button>
+        {modal && <AddRoomModal deactivateModal={deactivateModal} />}
       </div>
     </main>
   );
@@ -42,4 +59,10 @@ const stateToProps = (state) => {
   };
 };
 
-export default connect(stateToProps)(Accommodation);
+const dispatchToProps = (dispatch) => {
+  return {
+    createAccom: (accom) => dispatch(createAccom(accom)),
+  };
+};
+
+export default connect(stateToProps, dispatchToProps)(Accommodation);
