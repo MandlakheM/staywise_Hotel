@@ -3,7 +3,6 @@ import { useState } from "react";
 import "./accommodation.css";
 import AddRoomModal from "./addRoomModal";
 import { connect } from "react-redux";
-import { createAccom } from "../../../Redux/actions/accomActions";
 
 function Accommodation({ accom }) {
   const [modal, setModal] = useState(false);
@@ -59,10 +58,4 @@ const stateToProps = (state) => {
   };
 };
 
-const dispatchToProps = (dispatch) => {
-  return {
-    createAccom: (accom) => dispatch(createAccom(accom)),
-  };
-};
-
-export default connect(stateToProps, dispatchToProps)(Accommodation);
+export default connect(stateToProps)(Accommodation);

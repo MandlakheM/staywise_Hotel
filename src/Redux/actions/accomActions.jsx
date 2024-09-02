@@ -1,6 +1,16 @@
-export const createAccom = (accom) => {
-    return (dispatch, getAccomList) => {
+import { CREATE_ACCOMMODATION } from "../actionTypes/actionType";
 
-        dispatch({type: 'CREATE_ACCOMMODATION', accom})
-    }
-};
+export const createAccommodation = (accom) => {
+    return {
+      type: CREATE_ACCOMMODATION,
+      accom, 
+    };
+  };
+  
+
+  export const createAccom = (accom) => {
+    return (dispatch) => {
+      dispatch(createAccommodation(accom));
+    };
+  };
+  

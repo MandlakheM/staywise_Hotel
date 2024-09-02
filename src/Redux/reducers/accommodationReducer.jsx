@@ -1,3 +1,5 @@
+import { CREATE_ACCOMMODATION } from "../actionTypes/actionType";
+
 const initialState = {
   places: [
     {
@@ -28,11 +30,16 @@ const initialState = {
 };
 
 const accommodationReducer = (state = initialState, action) => {
-  switch (action.type){
-    case 'CREATE_ACCOMMODATION':
-    console.log('created accom listing', action.accom)
+  switch (action.type) {
+    case CREATE_ACCOMMODATION:
+      console.log("created accom listing", action.accom);
+      return {
+        ...state,
+        places: [...state.places, action.accom],
+      };
+    default:
+      return state;
   }
-  return state;
 };
 
 export default accommodationReducer;
