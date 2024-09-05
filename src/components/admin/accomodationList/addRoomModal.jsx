@@ -65,7 +65,7 @@ function AddRoomModal({ deactivateModal, currentAccommodation }) {
               console.log("Upload is running");
               break;
             default:
-              break;
+              break;   
           }
         },
         (error) => {

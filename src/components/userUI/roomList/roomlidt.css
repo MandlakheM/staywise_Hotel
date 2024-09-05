@@ -1,15 +1,115 @@
-.bodyList{
-    width: 100vw;
-    height: auto;
-    /* background-color: aqua; */
+.bodyList {
+  width: 100vw;
+  height: auto;
+  /* background-color: aqua; */
 }
 
-.listContainer{
-    display: flex;
-
+.listContainer {
+  display: flex;
 }
 
-.list{
+.list {
+  height: 100vh;
+  width: 70%;
+  overflow: scroll;
+}
+
+.mapContainer {
+  background-color: #ffe548;
+  height: 100vh;
+  width: 30%;
+}
+
+.searchHeading {
+  font-size: 1.5rem;
+}
+
+.locationSearch {
+  display: flex;
+  flex-direction: column;
+  padding-right: 2rem;
+}
+
+.filters {
+  display: flex;
+  padding-right: 2rem;
+  align-items: center;
+  justify-content: space-between;
+  /* position: relative; */
+}
+
+.minprice input,
+.maxprice input,
+.bedCount input,
+.bathroomCount input {
+  height: 2.5rem;
+  width: 5rem;
+}
+
+.minprice,
+.maxprice,
+.bedCount,
+.bathroomCount {
+  display: flex;
+  flex-direction: column;
+}
+
+.filterButton,
+.filterButton button {
+  height: 2.5rem;
+  width: 5rem;
+  align-self: flex-end;
+}
+
+.img {
+  background: url(./ds1-1-bed-suite-tower.jpg);
+  height: 200px;
+  width: 700px;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.roomCard {
+  margin-top: 10px;
+  margin-right: 2rem;
+  display: flex;
+  padding: 10px;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(6.6px);
+  -webkit-backdrop-filter: blur(6.6px);
+  border: 1px solid rgba(255, 255, 255, 0.32);
+}
+
+.roomInfo {
+  padding: 0 30px;
+}
+
+.desciption {
+  line-height: 1;
+  margin-bottom: 10px;
+  font-weight: 300;
+}
+
+.title {
+  font-weight: 600;
+  font-size: 1.5rem;
+  padding-bottom: 10px;
+}
+
+.roomPrice {
+  font-weight: 500;
+}
+
+.map {
+  width: 100%;
+  height: 90%;
+  display: grid;
+  overflow: hidden;
+  /* place-items: center; */
+}
+
+.leaflet-container{
     height: 100vh;
-    width: 70%;
 }

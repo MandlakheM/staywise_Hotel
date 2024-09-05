@@ -15,6 +15,7 @@ import Booking from "./components/userUI/rooms/booking";
 import About from "./components/userUI/roomList/about";
 import Home from "./components/userUI/home/home";
 import ProtectedRoute from "./components/router/protectedRoute";
+import IndividualRoom from "./components/userUI/roomList/individualRoom";
 
 function App() {
   const isLoggedIn = localStorage.getItem("loggedIn");
@@ -53,7 +54,8 @@ function App() {
               </>
             )}
           </Route>
-
+          
+          <Route path="/room" element={<IndividualRoom />} />
           <Route path="/about" element={<About />} />
           <Route path="/home" element={<Home />} />
           <Route path="*" element={<Navigate to="/" />} />
