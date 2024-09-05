@@ -27,15 +27,18 @@
   max-width: 600px;
   min-width: 300px;
   max-height: 80vh;
-  /* display: flex; */
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
   /* justify-content: space-around; */
-  /* align-items: center; */
+  align-items: center;
   overflow-y: scroll;
 }
 
 form {
   display: flex;
   flex-direction: column;
+  gap: 2.5rem;
   justify-content: space-around;
 }
 

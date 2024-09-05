@@ -1,47 +1,48 @@
-import { CREATE_ACCOMMODATION, CREATE_ACCOMMODATION_FAILED } from "../actionTypes/actionType";
+// src/redux/slices/accommodationSlice.js
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { getFirestore } from "firebase/firestore";
 
-const initialState = {
-  places: [
-    {
-      id: "1",
-      accomName: "Double deluxe suite",
-      price: "R1500",
-      rating: "5 star",
-      address: "jhb, prince street",
-      images: [],
-    },
-    {
-      id: "2",
-      accomName: "Penthouse deluxe",
-      price: "R5000",
-      rating: "5 star",
-      address: "cpt, vilakazi street",
-      images: [],
-    },
-    {
-      id: "3",
-      accomName: "Single suite",
-      price: "R1000",
-      rating: "5 star",
-      address: "vaal, cassandra avenue",
-      images: [],
-    },
-  ],
-};
-
-const accommodationReducer = (state = initialState, action) => {
-  switch (action.type) {
-    case CREATE_ACCOMMODATION:
-      console.log("created accom listing", action.accom);
-      return {
-        ...state,
-        places: [...state.places, action.accom],
-      };
-      case CREATE_ACCOMMODATION_FAILED:
-        return console.log(error, action.error)
-    default:
-      return state;
+// Async Thunks
+export const createAccommodation = createAsyncThunk(
+  "accommodations/createAccommodation",
+  async (accom, { rejectWithValue }) => {
+    try {
+      const firestore = getFirestore();
+      await firestore.collection("accommodationList").add({
+        ...accom,
+        creator: "me", 
+        createdAt: new Date(),
+      });
+      return accom;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
   }
-};
+);
 
-export default accommodationReducer;
+// Slice
+const accommodationSlice = createSlice({
+  name: "accommodations",
+  initialState: {
+    places: [],
+    status: null,
+    error: null,
+  },
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(createAccommodation.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(createAccommodation.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.places.push(action.payload);
+      })
+      .addCase(createAccommodation.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.payload;
+      });
+  },
+});
+
+export default accommodationSlice.reducer;

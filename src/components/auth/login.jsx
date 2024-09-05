@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../config/firebase";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -7,26 +9,31 @@ function Login() {
   function handleSubmit(e) {
     e.preventDefault();
 
-    const data = {
-      email,
-      userType: email === "admin@example.com" ? "Admin" : "User", 
-    };
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredentials) => {
+        const user = userCredentials.user;
 
-    localStorage.setItem("loggedIn", true);
-    localStorage.setItem("userType", data.userType);
+        const userType = email === "admin@example.com" ? "Admin" : "User";
+        
+        localStorage.setItem("loggedIn", true);
+        localStorage.setItem("userType", userType);
 
-    if (data.userType === "Admin") {
-      window.location.href = "/admin-dashboard";
-    } else {
-      window.location.href = "/userDetails";
-    }
+        if (userType === "Admin") {
+          window.location.href = "/admin-dashboard";
+        } else {
+          window.location.href = "/userDetails";
+        }
+      })
+      .catch((error) => {
+        console.error("Error logging in:", error.message);
+        alert("Invalid login credentials. Please try again.");
+      });
   }
 
   return (
     <div>
       <form onSubmit={handleSubmit}>
         <h3>Login</h3>
-
         <div>
           <label>Email address</label>
           <input

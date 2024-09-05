@@ -1,7 +1,15 @@
 .nav {
-  width: 100vw;
+  width: 100%;
+  height: 80px;
   text-align: center;
-  background-color: aqua;
+  /* background-color: aqua; */
+  display: flex;
+  grid-template-columns: 1fr 1fr 1fr;
+  align-items: center;
+  justify-content: space-between;
+  /* position: absolute; */
+  background-color: #FAEFF1;
+  /* overflow: hidden; */
 }
 
 ul {
@@ -9,4 +17,21 @@ ul {
   gap: 2rem;
   justify-content: center;
   list-style: none;
+}
+
+li:hover {
+  background-color: aqua;
+}
+
+.logo {
+  /* margin-right: auto; */
+}
+
+.auth {
+  width: 200px;
+  /* height: 30px; */
+  /* margin-left: auto; */
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
 }

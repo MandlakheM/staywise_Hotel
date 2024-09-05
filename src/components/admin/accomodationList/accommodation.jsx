@@ -1,13 +1,32 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./accommodation.css";
 import AddRoomModal from "./addRoomModal";
 import { connect } from "react-redux";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../../../config/firebase";
 
 function Accommodation({ accom }) {
   const [modal, setModal] = useState(false);
+  const [accommodations, setAccommodations] = useState([]);
 
-  console.log(accom);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const colRef = collection(db, "accommodationList");
+        const snapshot = await getDocs(colRef);
+        const accommodationList = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        // console.log("Fetched Data:", accommodationList); 
+        setAccommodations(accommodationList);
+      } catch (error) {
+        console.error("Error fetching documents:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const activateModal = () => {
     setModal(true);
@@ -20,8 +39,7 @@ function Accommodation({ accom }) {
   return (
     <main>
       <div className="accommodations">
-        {" "}
-        <table>
+        {/* <table>
           <thead>
             <tr>
               <th>ID</th>
@@ -42,20 +60,36 @@ function Accommodation({ accom }) {
               </tr>
             ))}
           </tbody>
-        </table>
+        </table> */}
         <button type="button" onClick={activateModal}>
-          add room
+          Add Room
         </button>
         {modal && <AddRoomModal deactivateModal={deactivateModal} />}
+        <div>
+          <h1>Accommodation List</h1>
+          <ul>
+            {accommodations.length > 0 ? (
+              accommodations.map((accommodation) => (
+                <li key={accommodation.id}>
+                  <h6>{accommodation.roomTitle}</h6>
+                  <p>{accommodation.roomDescription}</p>
+                </li>
+              ))
+            ) : (
+              <p>No accommodations available.</p> 
+            )}
+          </ul>
+          
+        </div>
       </div>
     </main>
   );
 }
 
-const stateToProps = (state) => {
-  return {
-    accom: state.accommodation.places,
-  };
-};
+// const mapStateToProps = (state) => {
+//   return {
+//     accom: state.accommodation.places,
+//   };
+// };
 
-export default connect(stateToProps)(Accommodation);
+export default Accommodation;

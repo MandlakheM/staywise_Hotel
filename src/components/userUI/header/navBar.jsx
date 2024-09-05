@@ -4,43 +4,51 @@ import "./nav.css";
 
 function Navbar({ isLoggedIn, userType }) {
   return (
-    <nav className="nav">
+    <nav className="nav gutter">
+      <div className="logo">STAYWISE</div>
       <ul>
-        <li></li>
-
         <li>
           <Link to="/home">Home</Link>
         </li>
         <li>
-          <Link to="/about">About</Link>
+          <Link to="/about">Explore rooms</Link>
         </li>
-        {isLoggedIn && userType == "Admin" ? (
+        <li>
+          <a href="#amenitiesContainer">Amenities</a>
+        </li>
+      </ul>
+      {isLoggedIn && userType == "Admin" ? (
+        <ul>
           <li>
             <Link to="/admin-dashboard">Dashboard</Link>
           </li>
-        ) : (
-          isLoggedIn && (
-            <>
+        </ul>
+      ) : (
+        isLoggedIn && (
+          <div className="details">
+            <ul>
               <li>
                 <Link to="/booking">Booking</Link>
               </li>
               <li>
                 <Link to="/userDetails">User Details</Link>
               </li>
-            </>
-          )
-        )}
-        {!isLoggedIn && (
-          <>
+            </ul>
+          </div>
+        )
+      )}
+      {!isLoggedIn && (
+        <div className="auth">
+          <ul>
             <li>
               <Link to="/login">Login</Link>
             </li>
             <li>
               <Link to="/register">Register</Link>
             </li>
-          </>
-        )}
-      </ul>
+          </ul>
+        </div>
+      )}
     </nav>
   );
 }

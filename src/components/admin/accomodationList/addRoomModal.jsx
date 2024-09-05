@@ -1,71 +1,104 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./addRoom.css";
-import { createAccom } from "../../../Redux/actions/accomActions";
+import { createAccommodation } from "../../../Redux/reducers/accommodationReducer";
 import { connect } from "react-redux";
 import { useDispatch } from "react-redux";
+import { db, storage } from "../../../config/firebase";
+import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUploadOutlined";
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { addDoc, collection, doc, serverTimestamp, setDoc } from "firebase/firestore";
 
 function AddRoomModal({ deactivateModal }) {
   const [room, setRoom] = useState({
-    roomTitle: "",
-    roomDescription: "",
-    address: "",
-    roomService: "false",
-    balcony: "false",
-    cityView: "false",
-    forestView: "false",
-    airConditioned: "false",
-    tv: "false",
-    wifi: "false",
-    oceanView: "false",
-    mountainView: "false",
-    soundProofed: "false",
-    image: "",
-    roomPrice: "",
-    breakfastPrice: "",
-    bedCount: "",
-    kingBed: "",
-    guestCount: "",
-    queenBed: "",
-    bathroomCount: "",
+    // roomTitle: "",
+    // roomDescription: "",
+    // address: "",
+    // roomService: "false",
+    // balcony: "false",
+    // cityView: "false",
+    // forestView: "false",
+    // airConditioned: "false",
+    // tv: "false",
+    // wifi: "false",
+    // oceanView: "false",
+    // mountainView: "false",
+    // soundProofed: "false",
+    // roomPrice: "",
+    // breakfastPrice: "",
+    // bedCount: "",
+    // kingBed: "",
+    // guestCount: "",
+    // queenBed: "",
+    // bathroomCount: "",
   });
+  const [file, setFile] = useState("");
+  const [per, setPerc] = useState(null);
 
-  const dispatch = useDispatch();
+  //   const dispatch = useDispatch();
+
+  useEffect(() => {
+    const uploadFile = () => {
+      const name = new Date().getTime() + file.name;
+
+      // console.log(name);
+      const storageRef = ref(storage, file.name);
+      const uploadTask = uploadBytesResumable(storageRef, file);
+
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          const progress =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          console.log("Upload is " + progress + "% done");
+          setPerc(progress);
+          switch (snapshot.state) {
+            case "paused":
+              console.log("Upload is paused");
+              break;
+            case "running":
+              console.log("Upload is running");
+              break;
+            default:
+              break;
+          }
+        },
+        (error) => {
+          console.log(error);
+        },
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+            setRoom((prev) => ({ ...prev, img: downloadURL }));
+          });
+        }
+      );
+    };
+    file && uploadFile();
+  }, [file]);
 
   const handleChange = (event) => {
-    const { name, value } = event.target;
+    const { name, value, type, checked } = event.target;
     setRoom({
       ...room,
-      [name]: value,
+      [name]: type === "checkbox" ? checked : value,
     });
+    // console.log(room);
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(room);
-    dispatch(createAccom(room));
-    setRoom({
-      roomTitle: "",
-      roomDescription: "",
-      address: "",
-      roomService: "false",
-      balcony: "false",
-      cityView: "false",
-      forestView: "false",
-      airConditioned: "false",
-      tv: "false",
-      wifi: "false",
-      oceanView: "false",
-      mountainView: "false",
-      soundProofed: "false",
-      image: "",
-      roomPrice: "",
-      breakfastPrice: "",
-      bedCount: "",
-      kingBed: "",
-      guestCount: "",
-      queenBed: "",
-      bathroomCount: "",
-    });
+    // dispatch(createAccommodation(room));
+
+    try {
+      await addDoc(collection(db, "accommodationList"), {
+        ...room,
+        timeStamp: serverTimestamp(),
+      });
+      // navigate(-1);
+      // window.location.href = "/login";
+      deactivateModal();
+    } catch (error) {
+      alert("Failed to add room. Please try again.");
+    }
   };
 
   return (
@@ -207,14 +240,14 @@ function AddRoomModal({ deactivateModal }) {
             </div>
 
             <div>
-              <label htmlFor="image">Upload an Image</label>
-              <br />
-              <br />
+              <label htmlFor="file">
+                Upload image: <DriveFolderUploadOutlinedIcon className="icon" />
+              </label>
               <input
                 type="file"
-                name="image"
-                id="image"
-                onChange={handleChange}
+                id="file"
+                onChange={(e) => setFile(e.target.files[0])}
+                style={{ display: "none" }}
               />
             </div>
 
@@ -309,10 +342,10 @@ function AddRoomModal({ deactivateModal }) {
   );
 }
 
-const dispatchToProps = (dispatch) => {
-  return {
-    createAccom: (room) => dispatch(createAccom(room)),
-  };
-};
+// const dispatchToProps = (dispatch) => {
+//   return {
+//     createAccom: (room) => dispatch(createAccom(room)),
+//   };
+// };
 
-export default connect(dispatchToProps)(AddRoomModal);
+export default AddRoomModal;

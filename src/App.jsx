@@ -22,7 +22,7 @@ function App() {
 
   return (
     <Router>
-      <div>
+      <div className="appContainer">
         <Navbar isLoggedIn={isLoggedIn} userType={userType} />
 
         <Routes>

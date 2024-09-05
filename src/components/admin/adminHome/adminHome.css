@@ -1,5 +1,11 @@
+.adminContainer{
+    width: 100vw;
+    display: grid;
+    grid-template-columns: 250px 1fr;
+}
+
 .asideContainer{
-    width: 100%;
+    /* width: 100%; */
     height: 60vh;
     background-color: aqua;
 }
@@ -9,9 +15,4 @@
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-}
-
-.adminContainer{
-    display: grid;
-    grid-template-columns: 300px 1fr;
 }
