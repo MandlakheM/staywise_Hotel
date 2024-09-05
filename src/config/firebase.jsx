@@ -18,15 +18,7 @@ import { getStorage } from 'firebase/storage';
 //   measurementId: "G-QLM7GXBFM1",
 // };
 
-const firebaseConfig = {
-  apiKey: "AIzaSyC4fBIlEoAGgZXysUXOUG9gR0kjuX1e63o",
-  authDomain: "staywise-53059.firebaseapp.com",
-  projectId: "staywise-53059",
-  storageBucket: "staywise-53059.appspot.com",
-  messagingSenderId: "312250822291",
-  appId: "1:312250822291:web:b185d7c1f6488aec47e766",
-  measurementId: "G-QLM7GXBFM1"
-};
+
 
 // console.log(firebaseConfig)
 // Initialize Firebase

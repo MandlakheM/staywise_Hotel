@@ -12,7 +12,7 @@ import UserDetails from "./components/userUI/userProfile/userDetails";
 import Navbar from "./components/userUI/header/navBar";
 import AdminHome from "./components/admin/adminHome/adminHome";
 import Booking from "./components/userUI/rooms/booking";
-import About from "./components/about";
+import About from "./components/userUI/roomList/about";
 import Home from "./components/userUI/home/home";
 import ProtectedRoute from "./components/router/protectedRoute";
 

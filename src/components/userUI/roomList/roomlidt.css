@@ -1,0 +1,15 @@
+.bodyList{
+    width: 100vw;
+    height: auto;
+    /* background-color: aqua; */
+}
+
+.listContainer{
+    display: flex;
+
+}
+
+.list{
+    height: 100vh;
+    width: 70%;
+}
