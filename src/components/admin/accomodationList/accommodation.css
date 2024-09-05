@@ -1,4 +1,11 @@
 .accommodations {
   background-color: blueviolet;
-  height: 80vh;
+  height: auto;
+  
+}
+
+.accommodationCards{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
 }

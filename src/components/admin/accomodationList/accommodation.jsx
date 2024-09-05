@@ -1,13 +1,21 @@
 import React, { useState, useEffect } from "react";
-import "./accommodation.css";
 import AddRoomModal from "./addRoomModal";
-import { connect } from "react-redux";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, deleteDoc, doc } from "firebase/firestore";
+import { getStorage, ref, getDownloadURL } from "firebase/storage";
 import { db } from "../../../config/firebase";
+import Card from "@mui/material/Card";
+import CardActions from "@mui/material/CardActions";
+import CardContent from "@mui/material/CardContent";
+import CardMedia from "@mui/material/CardMedia";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import "./accommodation.css";
 
-function Accommodation({ accom }) {
+function Accommodation() {
   const [modal, setModal] = useState(false);
   const [accommodations, setAccommodations] = useState([]);
+  const [selectedAccommodation, setSelectedAccommodation] = useState(null);
+  const storage = getStorage();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -18,8 +26,9 @@ function Accommodation({ accom }) {
           id: doc.id,
           ...doc.data(),
         }));
-        // console.log("Fetched Data:", accommodationList); 
+        // console.log("Fetched Data:", accommodationList);
         setAccommodations(accommodationList);
+        console.log(accommodations);
       } catch (error) {
         console.error("Error fetching documents:", error);
       }
@@ -36,60 +45,78 @@ function Accommodation({ accom }) {
     setModal(false);
   };
 
+  const handleUpdate = (accommodation) => {
+    setSelectedAccommodation(accommodation); // Set the current accommodation to state
+    setModal(true);
+  };
+
+  const handleDelete = async (accommodationId) => {
+    await deleteDoc(doc(db, "accommodationList", accommodationId)); // Deleting the accommodation from Firestore
+  };
+
   return (
     <main>
       <div className="accommodations">
-        {/* <table>
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Name</th>
-              <th>Price</th>
-              <th>Rating</th>
-              <th>Address</th>
-            </tr>
-          </thead>
-          <tbody>
-            {accom.map((place) => (
-              <tr key={place.id}>
-                <td>{place.id}</td>
-                <td>{place.accomName}</td>
-                <td>{place.price}</td>
-                <td>{place.rating}</td>
-                <td>{place.address}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table> */}
         <button type="button" onClick={activateModal}>
           Add Room
         </button>
-        {modal && <AddRoomModal deactivateModal={deactivateModal} />}
+        {modal && (
+          <AddRoomModal
+            deactivateModal={deactivateModal}
+            currentAccommodation={selectedAccommodation}
+          />
+        )}
         <div>
           <h1>Accommodation List</h1>
-          <ul>
+          <div className="accommodationCards">
             {accommodations.length > 0 ? (
               accommodations.map((accommodation) => (
-                <li key={accommodation.id}>
-                  <h6>{accommodation.roomTitle}</h6>
-                  <p>{accommodation.roomDescription}</p>
-                </li>
+                <div key={accommodation.id}>
+                  <Card
+                    sx={{ maxWidth: 345, marginBottom: "20px" }}
+                    key={accommodation.id}
+                  >
+                    <CardMedia
+                      sx={{ height: 140 }}
+                      image={accommodation.imageUrl} // Use fetched image URL
+                      title={accommodation.roomTitle}
+                    />
+                    <CardContent>
+                      <Typography gutterBottom variant="h5" component="div">
+                        {accommodation.roomTitle}
+                      </Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        {accommodation.roomDescription}
+                      </Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        Price: {accommodation.roomPrice}
+                      </Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        Guests: {accommodation.numberOfGuests}
+                      </Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        Address: {accommodation.address}
+                      </Typography>
+                    </CardContent>
+                    <CardActions>
+                      <Button onClick={() => handleUpdate(accommodation)}>
+                        Update
+                      </Button>
+                      <Button onClick={() => handleDelete(accommodation.id)}>
+                        Delete
+                      </Button>
+                    </CardActions>
+                  </Card>
+                </div>
               ))
             ) : (
-              <p>No accommodations available.</p> 
+              <p>No accommodations available.</p>
             )}
-          </ul>
-          
+          </div>
         </div>
       </div>
     </main>
   );
 }
-
-// const mapStateToProps = (state) => {
-//   return {
-//     accom: state.accommodation.places,
-//   };
-// };
 
 export default Accommodation;

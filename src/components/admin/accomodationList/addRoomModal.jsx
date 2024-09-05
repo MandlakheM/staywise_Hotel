@@ -6,30 +6,36 @@ import { useDispatch } from "react-redux";
 import { db, storage } from "../../../config/firebase";
 import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUploadOutlined";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import { addDoc, collection, doc, serverTimestamp, setDoc } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  doc,
+  serverTimestamp,
+  setDoc,
+} from "firebase/firestore";
 
-function AddRoomModal({ deactivateModal }) {
+function AddRoomModal({ deactivateModal, currentAccommodation }) {
   const [room, setRoom] = useState({
-    // roomTitle: "",
-    // roomDescription: "",
-    // address: "",
-    // roomService: "false",
-    // balcony: "false",
-    // cityView: "false",
-    // forestView: "false",
-    // airConditioned: "false",
-    // tv: "false",
-    // wifi: "false",
-    // oceanView: "false",
-    // mountainView: "false",
-    // soundProofed: "false",
-    // roomPrice: "",
-    // breakfastPrice: "",
-    // bedCount: "",
-    // kingBed: "",
-    // guestCount: "",
-    // queenBed: "",
-    // bathroomCount: "",
+    roomTitle: currentAccommodation?.roomTitle || "",
+    roomDescription: currentAccommodation?.roomDescription || "",
+    address: currentAccommodation?.address || "",
+    roomService: currentAccommodation?.roomService || false,
+    balcony: currentAccommodation?.balcony || false,
+    cityView: currentAccommodation?.cityView || false,
+    forestView: currentAccommodation?.forestView || false,
+    airConditioned: currentAccommodation?.airConditioned || false,
+    tv: currentAccommodation?.tv || false,
+    wifi: currentAccommodation?.wifi || false,
+    oceanView: currentAccommodation?.oceanView || false,
+    mountainView: currentAccommodation?.mountainView || false,
+    soundProofed: currentAccommodation?.soundProofed || false,
+    roomPrice: currentAccommodation?.roomPrice || "",
+    breakfastPrice: currentAccommodation?.breakfastPrice || "",
+    bedCount: currentAccommodation?.bedCount || "",
+    kingBed: currentAccommodation?.kingBed || "",
+    guestCount: currentAccommodation?.guestCount || "",
+    queenBed: currentAccommodation?.queenBed || "",
+    bathroomCount: currentAccommodation?.bathroomCount || "",
   });
   const [file, setFile] = useState("");
   const [per, setPerc] = useState(null);
@@ -89,12 +95,21 @@ function AddRoomModal({ deactivateModal }) {
     // dispatch(createAccommodation(room));
 
     try {
-      await addDoc(collection(db, "accommodationList"), {
-        ...room,
-        timeStamp: serverTimestamp(),
-      });
-      // navigate(-1);
-      // window.location.href = "/login";
+      if (currentAccommodation) {
+        // Updating an existing accommodation
+        const accommodationRef = doc(
+          db,
+          "accommodationList",
+          currentAccommodation.id
+        );
+        await setDoc(accommodationRef, { ...room }, { merge: true });
+      } else {
+        // Creating a new accommodation
+        await addDoc(collection(db, "accommodationList"), {
+          ...room,
+          timeStamp: serverTimestamp(),
+        });
+      }
       deactivateModal();
     } catch (error) {
       alert("Failed to add room. Please try again.");
@@ -115,6 +130,7 @@ function AddRoomModal({ deactivateModal }) {
               <br />
               <input
                 type="text"
+                value={room.roomTitle}
                 name="roomTitle"
                 id="roomTitle"
                 onChange={handleChange}
@@ -129,6 +145,7 @@ function AddRoomModal({ deactivateModal }) {
                 type="text"
                 name="roomDescription"
                 id="roomDescription"
+                value={room.roomDescription}
                 onChange={handleChange}
               />
             </div>
@@ -141,6 +158,7 @@ function AddRoomModal({ deactivateModal }) {
                 type="text"
                 name="address"
                 id="address"
+                value={room.address}
                 onChange={handleChange}
               />
             </div>
@@ -152,6 +170,7 @@ function AddRoomModal({ deactivateModal }) {
                   type="checkbox"
                   name="roomService"
                   id="roomService"
+                  value={room.roomService}
                   onChange={handleChange}
                 />
                 <label htmlFor="roomService">24hrs room services</label>
@@ -161,6 +180,7 @@ function AddRoomModal({ deactivateModal }) {
                   type="checkbox"
                   name="balcony"
                   id="balcony"
+                  value={room.balcony}
                   onChange={handleChange}
                 />
                 <label htmlFor="balcony">balcony</label>
@@ -170,6 +190,7 @@ function AddRoomModal({ deactivateModal }) {
                   type="checkbox"
                   name="cityView"
                   id="cityView"
+                  value={room.cityView}
                   onChange={handleChange}
                 />
                 <label htmlFor="cityView">city view</label>
@@ -179,6 +200,7 @@ function AddRoomModal({ deactivateModal }) {
                   type="checkbox"
                   name="forestView"
                   id="forestView"
+                  value={room.forestView}
                   onChange={handleChange}
                 />
                 <label htmlFor="forestView">forest view</label>
@@ -188,6 +210,7 @@ function AddRoomModal({ deactivateModal }) {
                   type="checkbox"
                   name="airConditioned"
                   id="airConditioned"
+                  value={room.airConditioned}
                   onChange={handleChange}
                 />
                 <label htmlFor="airConditioned">air conditioned</label>
@@ -197,6 +220,7 @@ function AddRoomModal({ deactivateModal }) {
                   type="checkbox"
                   name="tv"
                   id="tv"
+                  value={room.tv}
                   onChange={handleChange}
                 />
                 <label htmlFor="tv">TV</label>
@@ -206,6 +230,7 @@ function AddRoomModal({ deactivateModal }) {
                   type="checkbox"
                   name="wifi"
                   id="wifi"
+                  value={room.wifi}
                   onChange={handleChange}
                 />
                 <label htmlFor="wifi">free Wifi</label>
@@ -215,6 +240,7 @@ function AddRoomModal({ deactivateModal }) {
                   type="checkbox"
                   name="oceanView"
                   id="oceanView"
+                  value={room.oceanView}
                   onChange={handleChange}
                 />
                 <label htmlFor="oceanView">ocean view</label>
@@ -224,6 +250,7 @@ function AddRoomModal({ deactivateModal }) {
                   type="checkbox"
                   name="mountainView"
                   id="mountainView"
+                  value={room.mountainView}
                   onChange={handleChange}
                 />
                 <label htmlFor="mountainView">mountain view</label>
@@ -233,6 +260,7 @@ function AddRoomModal({ deactivateModal }) {
                   type="checkbox"
                   name="soundProofed"
                   id="soundProofed"
+                  value={room.soundProofed}
                   onChange={handleChange}
                 />
                 <label htmlFor="soundProofed">sound proofed</label>
@@ -258,6 +286,7 @@ function AddRoomModal({ deactivateModal }) {
                 type="text"
                 name="roomPrice"
                 id="roomPrice"
+                value={room.roomPrice}
                 onChange={handleChange}
               />
             </div>
@@ -269,6 +298,7 @@ function AddRoomModal({ deactivateModal }) {
                 type="number"
                 name="breakfastPrice"
                 id="breakfastPrice"
+                value={room.breakfastPrice}
                 onChange={handleChange}
               />
             </div>
@@ -280,6 +310,7 @@ function AddRoomModal({ deactivateModal }) {
                 type="number"
                 name="bedCount"
                 id="bedCount"
+                value={room.bedCount}
                 onChange={handleChange}
               />
             </div>
@@ -292,6 +323,7 @@ function AddRoomModal({ deactivateModal }) {
                 type="number"
                 name="kingBed"
                 id="kingBed"
+                value={room.kingBed}
                 onChange={handleChange}
               />
             </div>
@@ -303,6 +335,7 @@ function AddRoomModal({ deactivateModal }) {
                 type="number"
                 name="guestCount"
                 id="guestCount"
+                value={room.guestCount}
                 onChange={handleChange}
               />
             </div>
@@ -315,6 +348,7 @@ function AddRoomModal({ deactivateModal }) {
                 type="number"
                 name="queenBed"
                 id="queenBed"
+                value={room.queenBed}
                 onChange={handleChange}
               />
             </div>
@@ -326,12 +360,16 @@ function AddRoomModal({ deactivateModal }) {
                 type="number"
                 name="bathroomCount"
                 id="bathroomCount"
+                value={room.bathroomCount}
                 onChange={handleChange}
               />
             </div>
 
-            <button type="submit">Create Accommodation</button>
-
+            <button type="submit">
+              {currentAccommodation
+                ? "Update Accommodation"
+                : "Create Accommodation"}
+            </button>
             <div className="closeModal">
               <button type="button" onClick={deactivateModal}></button>
             </div>
