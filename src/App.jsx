@@ -55,7 +55,7 @@ function App() {
             )}
           </Route>
           
-          <Route path="/room" element={<IndividualRoom />} />
+          <Route path="/room/:roomId" element={<IndividualRoom />} />
           <Route path="/about" element={<About />} />
           <Route path="/home" element={<Home />} />
           <Route path="*" element={<Navigate to="/" />} />
