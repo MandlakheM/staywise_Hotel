@@ -1,0 +1,75 @@
+/* Main container */
+.room-details-container {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px auto;
+    max-width: 1200px;
+    padding: 20px;
+  }
+  
+  /* Left-side room info */
+  .room-info {
+    width: 65%;
+  }
+  
+  /* Image gallery */
+  .image-gallery {
+    margin-bottom: 20px;
+  }
+  
+  .main-image {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+  }
+  
+  .thumbnail-images {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+  }
+  
+  .thumbnail {
+    width: 100px;
+    height: 100px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  /* Room description */
+  .room-description h2 {
+    font-size: 24px;
+    margin-bottom: 15px;
+  }
+  
+  .room-description p {
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 20px;
+  }
+  
+  /* Amenities list */
+  .amenities {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 10px;
+    font-size: 14px;
+    color: #333;
+  }
+  
+  .amenities div {
+    display: flex;
+    align-items: center;
+  }
+  
+  .amenities i {
+    margin-right: 8px;
+  }
+  
+  /* Right-side booking section */
+  .booking-section {
+    width: 30%;
+  }
+  
+  /* BookingForm CSS is already implemented */
+  
