@@ -46,12 +46,12 @@ function Accommodation() {
   };
 
   const handleUpdate = (accommodation) => {
-    setSelectedAccommodation(accommodation); // Set the current accommodation to state
+    setSelectedAccommodation(accommodation); 
     setModal(true);
   };
 
   const handleDelete = async (accommodationId) => {
-    await deleteDoc(doc(db, "accommodationList", accommodationId)); // Deleting the accommodation from Firestore
+    await deleteDoc(doc(db, "accommodationList", accommodationId)); 
   };
 
   return (
@@ -78,7 +78,7 @@ function Accommodation() {
                   >
                     <CardMedia
                       sx={{ height: 140 }}
-                      image={accommodation.imageUrl} 
+                      image={accommodation.imageUrl}
                       title={accommodation.roomTitle}
                     />
                     <CardContent>

@@ -1,15 +1,31 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./roomlidt.css";
-import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../../../config/firebase";
 import Map from "./map";
 import Roomcard from "./roomcard";
 
-function about() {
+function About() {
+  const [accommodations, setAccommodations] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const colRef = collection(db, "accommodationList");
+        const snapshot = await getDocs(colRef);
+        const accommodationList = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setAccommodations(accommodationList);
+      } catch (error) {
+        console.error("Error fetching documents:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <div className="bodyList gutter">
       <div className="listContainer">
@@ -18,10 +34,7 @@ function about() {
             <div className="searchHeading">
               <p>Search results for your ideal room by :</p>
             </div>
-            {/* <div className="locationSearch">
-            <label htmlFor="location">Location</label>
-            <input type="text" name="location" />
-          </div> */}
+
             <div className="filters">
               <div className="minprice">
                 <label htmlFor="minPrice">Min price</label>
@@ -40,15 +53,16 @@ function about() {
                 <input type="number" name="bathroomCount" />
               </div>
               <div className="filterButton">
-                <button>search</button>
+                <button>Search</button>
               </div>
             </div>
           </div>
-          <Roomcard />
-          <Roomcard />
-          <Roomcard />
+
+          {accommodations.map((room) => (
+            <Roomcard key={room.id} room={room} />
+          ))}
         </div>
-        {/* <h1>About Page</h1> */}
+
         <div className="mapContainer">
           <Map />
         </div>
@@ -57,4 +71,4 @@ function about() {
   );
 }
 
-export default about;
+export default About;
