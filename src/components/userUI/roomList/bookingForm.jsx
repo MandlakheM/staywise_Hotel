@@ -2,9 +2,10 @@ import React, { useState } from "react";
 import { getAuth } from "firebase/auth";
 import { addDoc, collection } from "firebase/firestore";
 import { db } from "../../../config/firebase";
-import './BookingForm.css'
+import "./BookingForm.css";
+import { useNavigate } from "react-router-dom";
 
-function BookingForm({ roomId, roomPrice, roomBreakfastFee }) {
+function BookingForm({ roomId, roomPrice, roomBreakfastFee, roomDetails }) {
   const [guests, setGuests] = useState(1);
   const [continueBooking, setContinueBooking] = useState(false);
   const [checkinDate, setCheckinDate] = useState("");
@@ -18,6 +19,7 @@ function BookingForm({ roomId, roomPrice, roomBreakfastFee }) {
     cvv: "",
   });
 
+  const navigate = useNavigate();
   const auth = getAuth();
   const user = auth.currentUser;
 
@@ -47,12 +49,14 @@ function BookingForm({ roomId, roomPrice, roomBreakfastFee }) {
           totalAmount: totalBeforeTaxes,
           userDetails: { ...userDetails },
           timestamp: new Date(),
+          ...roomDetails,
         };
 
         await addDoc(collection(db, "bookings"), bookingData);
 
         alert("Booking successful!");
         setContinueBooking(false);
+        navigate("/userDetails");
       } catch (error) {
         console.error("Error making booking:", error);
       }

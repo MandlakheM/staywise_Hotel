@@ -36,21 +36,22 @@ function IndividualRoom() {
   const user = auth.currentUser;
 
   const addToFav = async () => {
-    if (user && roomId) {
+    if (user && roomId && roomDetails) {
       const favourite = {
         userId: user.uid,
         roomId,
         timestamp: new Date(),
+        ...roomDetails,
       };
 
       try {
-        await setDoc(doc(db, "favorites", `${user.uid}_${roomId}`), favourite); 
+        await setDoc(doc(db, "favorites", `${user.uid}_${roomId}`), favourite);
         console.log("Room added to favorites:", favourite);
       } catch (error) {
         console.error("Error adding to favorites:", error);
       }
     } else {
-      console.error("User not authenticated or room ID missing");
+      console.error("User not authenticated, room ID, or room details missing");
     }
   };
 
@@ -88,6 +89,7 @@ function IndividualRoom() {
           roomId={roomId}
           roomPrice={roomDetails.roomPrice}
           roomBreakfastFee={roomDetails.breakfastFee}
+          roomDetails={roomDetails}
         />
       </div>
     </div>
