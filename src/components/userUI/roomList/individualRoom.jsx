@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { doc, getDoc } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
+import { doc, getDoc, setDoc } from "firebase/firestore";
 import { db } from "../../../config/firebase";
 import "./RoomDetailsPage.css";
 import BookingForm from "./bookingForm";
@@ -31,6 +32,28 @@ function IndividualRoom() {
     return <div>Loading...</div>;
   }
 
+  const auth = getAuth();
+  const user = auth.currentUser;
+
+  const addToFav = async () => {
+    if (user && roomId) {
+      const favourite = {
+        userId: user.uid,
+        roomId,
+        timestamp: new Date(),
+      };
+
+      try {
+        await setDoc(doc(db, "favorites", `${user.uid}_${roomId}`), favourite); 
+        console.log("Room added to favorites:", favourite);
+      } catch (error) {
+        console.error("Error adding to favorites:", error);
+      }
+    } else {
+      console.error("User not authenticated or room ID missing");
+    }
+  };
+
   return (
     <div className="room-details-container">
       <div className="room-info">
@@ -40,29 +63,32 @@ function IndividualRoom() {
             alt={roomDetails.roomTitle}
             className="main-image"
           />
-          {/* <div className="thumbnail-images">
-            {roomDetails.img?.map((image, index) => (
-              <img key={index} src={image} alt={`Thumbnail ${index + 1}`} className="thumbnail" />
-            ))}
-          </div> */}
         </div>
 
         <div className="room-description">
           <h2>{roomDetails.roomTitle}</h2>
+          <button type="button" onClick={addToFav}>
+            Add to Favorites
+          </button>
           <p>{roomDetails.roomDescription}</p>
           <div className="amenities">
-            <div><i className="icon">wifi</i> {roomDetails.wifi ? "wifi" : "No wifi"}</div>
-            <div><i className="icon">lock</i> {roomDetails.tv ? "Safe" : "No tv"}</div>
-            {/* <div><i className="icon">kitchen</i> {roomDetails.amenities?.refrigerator ? "Refrigerator" : "No refrigerator"}</div> */}
+            <div>
+              <i className="icon">wifi</i>{" "}
+              {roomDetails.wifi ? "wifi" : "No wifi"}
+            </div>
+            <div>
+              <i className="icon">lock</i> {roomDetails.tv ? "Safe" : "No tv"}
+            </div>
           </div>
         </div>
       </div>
 
       <div className="booking-section">
-        {/* <Calender/> */}
-        <BookingForm roomId={roomId} roomPrice={roomDetails.roomPrice} roomBreakfastFee={roomDetails.breakfastFee} />
-
-        {/* <BookingForm roomPrice={roomDetails.roomPrice} roomBreakfastFee={roomDetails.breakfastPrice}/> */}
+        <BookingForm
+          roomId={roomId}
+          roomPrice={roomDetails.roomPrice}
+          roomBreakfastFee={roomDetails.breakfastFee}
+        />
       </div>
     </div>
   );

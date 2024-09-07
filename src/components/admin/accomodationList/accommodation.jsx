@@ -78,7 +78,7 @@ function Accommodation() {
                   >
                     <CardMedia
                       sx={{ height: 140 }}
-                      image={accommodation.imageUrl}
+                      image={accommodation.img}
                       title={accommodation.roomTitle}
                     />
                     <CardContent>

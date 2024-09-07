@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { getAuth } from "firebase/auth";
-import { addDoc, collection } from "firebase/firestore"; 
+import { addDoc, collection } from "firebase/firestore";
 import { db } from "../../../config/firebase";
+import './BookingForm.css'
 
 function BookingForm({ roomId, roomPrice, roomBreakfastFee }) {
   const [guests, setGuests] = useState(1);
@@ -14,14 +15,16 @@ function BookingForm({ roomId, roomPrice, roomBreakfastFee }) {
     postalCode: "",
     cardNumber: "",
     expirationDate: "",
-    cvv: ""
+    cvv: "",
   });
-  
-  const auth = getAuth(); 
+
+  const auth = getAuth();
   const user = auth.currentUser;
-  
+
   const pricePerNight = roomPrice;
-  const nights = Math.ceil((new Date(checkoutDate) - new Date(checkinDate)) / (1000 * 60 * 60 * 24)); 
+  const nights = Math.ceil(
+    (new Date(checkoutDate) - new Date(checkinDate)) / (1000 * 60 * 60 * 24)
+  );
   const breakfastFee = roomBreakfastFee;
   const totalBeforeTaxes = pricePerNight * nights + breakfastFee;
 
@@ -36,19 +39,20 @@ function BookingForm({ roomId, roomPrice, roomBreakfastFee }) {
     if (user && roomId) {
       try {
         const bookingData = {
-          userId: user.uid, 
-          roomId, 
+          userId: user.uid,
+          roomId,
           guests,
           checkinDate,
           checkoutDate,
           totalAmount: totalBeforeTaxes,
-          userDetails: { ...userDetails }, 
+          userDetails: { ...userDetails },
           timestamp: new Date(),
         };
 
         await addDoc(collection(db, "bookings"), bookingData);
 
         alert("Booking successful!");
+        setContinueBooking(false);
       } catch (error) {
         console.error("Error making booking:", error);
       }
@@ -70,7 +74,10 @@ function BookingForm({ roomId, roomPrice, roomBreakfastFee }) {
         </div>
         <div className="date-box">
           <label>Checkout</label>
-          <input type="date" onChange={(e) => setCheckoutDate(e.target.value)} />
+          <input
+            type="date"
+            onChange={(e) => setCheckoutDate(e.target.value)}
+          />
         </div>
       </div>
 
@@ -84,19 +91,52 @@ function BookingForm({ roomId, roomPrice, roomBreakfastFee }) {
         </select>
       </div>
 
-      <button className="reserve-button" onClick={() => setContinueBooking(true)}>
+      <button
+        className="reserve-button"
+        onClick={() => setContinueBooking(true)}
+      >
         Reserve
       </button>
 
       {continueBooking && (
         <div className="payment-form">
-          <input type="text" name="name" placeholder="Name" onChange={handleInputChange} />
-          <input type="text" name="address" placeholder="Address" onChange={handleInputChange} />
-          <input type="text" name="postalCode" placeholder="Postal Code" onChange={handleInputChange} />
-          <input type="text" name="cardNumber" placeholder="Card Number" onChange={handleInputChange} />
-          <input type="text" name="expirationDate" placeholder="Expiration Date" onChange={handleInputChange} />
-          <input type="text" name="cvv" placeholder="CVV" onChange={handleInputChange} />
-          
+          <input
+            type="text"
+            name="name"
+            placeholder="Name"
+            onChange={handleInputChange}
+          />
+          <input
+            type="text"
+            name="address"
+            placeholder="Address"
+            onChange={handleInputChange}
+          />
+          <input
+            type="text"
+            name="postalCode"
+            placeholder="Postal Code"
+            onChange={handleInputChange}
+          />
+          <input
+            type="text"
+            name="cardNumber"
+            placeholder="Card Number"
+            onChange={handleInputChange}
+          />
+          <input
+            type="text"
+            name="expirationDate"
+            placeholder="Expiration Date"
+            onChange={handleInputChange}
+          />
+          <input
+            type="text"
+            name="cvv"
+            placeholder="CVV"
+            onChange={handleInputChange}
+          />
+
           <button className="payment-button" onClick={reserve}>
             Make Payment
           </button>
