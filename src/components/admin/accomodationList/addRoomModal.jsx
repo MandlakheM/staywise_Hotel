@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import "./addRoom.css";
-import { createAccommodation } from "../../../Redux/reducers/accommodationReducer";
 import { connect } from "react-redux";
 import { useDispatch } from "react-redux";
 import { db, storage } from "../../../config/firebase";

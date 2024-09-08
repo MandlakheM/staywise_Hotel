@@ -4,6 +4,8 @@ import { addDoc, collection } from "firebase/firestore";
 import { db } from "../../../config/firebase";
 import "./BookingForm.css";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { makeBooking } from "../../../Redux/booking/bookingSlice";
 
 function BookingForm({ roomId, roomPrice, roomBreakfastFee, roomDetails }) {
   const [guests, setGuests] = useState(1);
@@ -18,7 +20,7 @@ function BookingForm({ roomId, roomPrice, roomBreakfastFee, roomDetails }) {
     expirationDate: "",
     cvv: "",
   });
-
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const auth = getAuth();
   const user = auth.currentUser;
@@ -28,8 +30,8 @@ function BookingForm({ roomId, roomPrice, roomBreakfastFee, roomDetails }) {
     (new Date(checkoutDate) - new Date(checkinDate)) / (1000 * 60 * 60 * 24)
   );
   const breakfastFee = roomBreakfastFee;
-  const totalBeforeTaxes = pricePerNight * nights + breakfastFee;
-
+  const totalBeforeTaxes = pricePerNight * (nights + breakfastFee); //this needs to be fixed!!
+  // console.log(totalBeforeTaxes);
   const handleInputChange = (e) => {
     setUserDetails({
       ...userDetails,
@@ -37,29 +39,23 @@ function BookingForm({ roomId, roomPrice, roomBreakfastFee, roomDetails }) {
     });
   };
 
-  const reserve = async () => {
+  const reserve = () => {
     if (user && roomId) {
-      try {
-        const bookingData = {
-          userId: user.uid,
-          roomId,
-          guests,
-          checkinDate,
-          checkoutDate,
-          totalAmount: totalBeforeTaxes,
-          userDetails: { ...userDetails },
-          timestamp: new Date(),
-          ...roomDetails,
-        };
-
-        await addDoc(collection(db, "bookings"), bookingData);
-
-        alert("Booking successful!");
-        setContinueBooking(false);
-        navigate("/userDetails");
-      } catch (error) {
-        console.error("Error making booking:", error);
-      }
+      const bookingData = {
+        userId: user.uid,
+        roomId,
+        guests,
+        checkinDate,
+        checkoutDate,
+        totalAmount: totalBeforeTaxes,
+        userDetails: { ...userDetails },
+        timestamp: new Date(),
+        ...roomDetails,
+      };
+      dispatch(makeBooking(bookingData));
+      // alert("Booking successful!");
+      setContinueBooking(false);
+      navigate("/userDetails");
     } else {
       alert("You must be logged in to make a booking.");
     }
@@ -155,7 +151,7 @@ function BookingForm({ roomId, roomPrice, roomBreakfastFee, roomDetails }) {
           <span>R{pricePerNight * nights}</span>
         </p>
         <p>
-          Breakfast fee<span>R{breakfastFee}</span>
+          Breakfast fee<span>R{breakfastFee || "0"}</span>
         </p>
         <hr />
         <p>

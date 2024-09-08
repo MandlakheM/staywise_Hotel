@@ -1,5 +1,6 @@
-.body{
+.body {
   height: auto;
+  overflow-x: hidden; 
 }
 
 .home {
@@ -9,40 +10,40 @@
   height: 100vh;
   background-image: url(../../../assets/hammocks-near-pool.jpg);
   background-size: cover;
-  background-repeat: no-repeat;
+  background-position: center; 
   text-align: center;
   font-size: 3rem;
-  /* object-fit:contain; */
+  color: white;
 }
 
 .amenitiesContainer {
-  height: 500px;
-  width: 100vw;
-  margin-top: 2rem;
   display: grid;
-  height: auto;
   grid-template-columns: 1fr 1fr;
+  align-items: center; 
 }
 
 .amenitiesPic {
   background-image: url(../../../assets/ds1-1-bed-suite-tower.jpg);
   background-size: cover;
+  background-position: center;
   height: 300px;
-  width: 100%;
 }
 
 .homeHeading {
-  font-size: 2rem;
-  line-height: 1.2;
+  font-size: 2.5rem;
+  line-height: 1.4;
+  margin-top: 2rem;
 }
 
 .amenitiesType {
   display: flex;
   align-items: center;
+  gap: 10px; 
   margin-top: 1rem;
+  font-size: 1.2rem;
 }
 
 .offeringsContainer {
   text-align: center;
-  margin-top: 1rem;
+  padding: 2rem 0;
 }

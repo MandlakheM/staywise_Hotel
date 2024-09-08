@@ -1,18 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
-import accommodationReducer from "../reducers/accommodationReducer";
-import { getFirestore } from "firebase/firestore";
-
+import bookingReducer from "../booking/bookingSlice";
 
 const store = configureStore({
   reducer: {
-    accommodations: accommodationReducer,
+    booking: bookingReducer,
   },
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({
-      thunk: {
-        extraArgument: { getFirestore },
-      },
-    }),
 });
 
 export default store;
