@@ -7,11 +7,10 @@
   padding: 1rem 1rem 5rem 1rem;
 }
 
-.home{
+.home {
   position: relative;
   min-height: 500px;
-  background-image: 
-    url(../../../assets/hammocks-near-pool.jpg);
+  background-image: url(../../../assets/hammocks-near-pool.jpg);
   background-position: center center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -126,15 +125,18 @@
 
 .amenitiesContainer {
   display: grid;
+  place-content: center;
   grid-template-columns: 1fr 1fr;
   align-items: center;
+  min-height: 500px;
 }
 
 .amenitiesPic {
   background-image: url(../../../assets/ds1-1-bed-suite-tower.jpg);
   background-size: cover;
   background-position: center;
-  height: 300px;
+  height: 350px;
+  border-radius: 20px;
 }
 
 .homeHeading {
@@ -142,6 +144,11 @@
   font-size: 2.5rem;
   line-height: 4rem;
   font-weight: 600;
+  color: var(--text-dark);
+}
+
+.amenitiesText p {
+  color: var(--text-light);
 }
 
 .amenitiesType {
@@ -150,9 +157,73 @@
   gap: 10px;
   margin-top: 1rem;
   font-size: 1.2rem;
+  /* cursor: pointer; */
+  color: var(--text-light);
+}
+
+.homeHeading:hover {
+  color: var(--primary-color-dark);
+}
+
+.homeHeading p:hover {
+  color: var(--primary-color-dark);
+}
+
+.amenitiesType p:hover {
+  color: var(--primary-color-dark);
 }
 
 .offeringsContainer {
   text-align: center;
-  padding: 2rem 0;
+  margin-top: 5rem;
+  /* background-color: aqua; */
+  min-height: 500px;
+}
+
+.cardContainer {
+  margin-top: 3rem;
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 80px;
+}
+
+.happyGuests{
+  /* margin-top: 2rem; */
+  min-height: 350px;
+}
+
+.happyGuests p {
+  color: var(--text-light);
+}
+
+.reviewimg {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.reviewimg img {
+  width: 50px;
+  height: 50px;
+}
+
+.reviewuser {
+  display: flex;
+  align-items: center;
+}
+
+.ratingsContainer{
+  display: flex;
+  gap: 2rem;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 3rem;
+}
+
+.ratings{
+  width: 500px;
+}
+
+.comment p {
+  font-weight: bold;
 }
