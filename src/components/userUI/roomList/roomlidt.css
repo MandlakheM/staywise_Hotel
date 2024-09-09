@@ -1,6 +1,6 @@
 .bodyList {
   width: 100vw;
-  height: auto;
+  height: calc(100vh - 80px);
   /* background-color: aqua; */
 }
 
@@ -119,5 +119,5 @@
 }
 
 .leaflet-container {
-  height: 100vh;
+  height: 90vh;
 }

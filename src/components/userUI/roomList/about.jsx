@@ -1,29 +1,53 @@
 import React, { useState, useEffect } from "react";
 import "./roomlidt.css";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, query, where } from "firebase/firestore"; 
 import { db } from "../../../config/firebase";
 import Map from "./map";
 import Roomcard from "./roomcard";
 
 function About() {
   const [accommodations, setAccommodations] = useState([]);
+  const [minPrice, setMinPrice] = useState(""); 
+  const [maxPrice, setMaxPrice] = useState(""); 
+  const [bedCount, setBedCount] = useState(""); 
+  const [bathroomCount, setBathroomCount] = useState(""); 
+
+  const fetchData = async () => {
+    try {
+      const colRef = collection(db, "accommodationList");
+      
+      let roomQuery = colRef;
+
+      if (minPrice) {
+        roomQuery = query(roomQuery, where("roomPrice", ">=", Number(minPrice)));
+      }
+      if (maxPrice) {
+        roomQuery = query(roomQuery, where("roomPrice", "<=", Number(maxPrice)));
+      }
+      if (bedCount) {
+        roomQuery = query(roomQuery, where("bedCount", "==", Number(bedCount)));
+      }
+      if (bathroomCount) {
+        roomQuery = query(roomQuery, where("bathroomCount", "==", Number(bathroomCount)));
+      }
+
+      const snapshot = await getDocs(roomQuery);
+      const accommodationList = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setAccommodations(accommodationList);
+    } catch (error) {
+      console.error("Error fetching documents:", error);
+    }
+  };
+
+  const handleSearch = () => {
+    fetchData(); 
+  };
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const colRef = collection(db, "accommodationList");
-        const snapshot = await getDocs(colRef);
-        const accommodationList = snapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
-        setAccommodations(accommodationList);
-      } catch (error) {
-        console.error("Error fetching documents:", error);
-      }
-    };
-
-    fetchData();
+    fetchData(); 
   }, []);
 
   return (
@@ -38,22 +62,42 @@ function About() {
             <div className="filters">
               <div className="minprice">
                 <label htmlFor="minPrice">Min price</label>
-                <input type="number" name="minPrice" />
+                <input
+                  type="number"
+                  name="minPrice"
+                  value={minPrice}
+                  onChange={(e) => setMinPrice(e.target.value)} 
+                />
               </div>
               <div className="maxprice">
                 <label htmlFor="maxPrice">Max price</label>
-                <input type="number" name="maxPrice" />
+                <input
+                  type="number"
+                  name="maxPrice"
+                  value={maxPrice}
+                  onChange={(e) => setMaxPrice(e.target.value)} 
+                />
               </div>
               <div className="bedCount">
                 <label htmlFor="bedCount">Bed count</label>
-                <input type="number" name="bedCount" />
+                <input
+                  type="number"
+                  name="bedCount"
+                  value={bedCount}
+                  onChange={(e) => setBedCount(e.target.value)} 
+                />
               </div>
               <div className="bathroomCount">
                 <label htmlFor="bathroomCount">Bathroom count</label>
-                <input type="number" name="bathroomCount" />
+                <input
+                  type="number"
+                  name="bathroomCount"
+                  value={bathroomCount}
+                  onChange={(e) => setBathroomCount(e.target.value)} 
+                />
               </div>
               <div className="filterButton">
-                <button>Search</button>
+                <button onClick={handleSearch}>Search</button> 
               </div>
             </div>
           </div>

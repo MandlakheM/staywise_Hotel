@@ -37,6 +37,22 @@ export const fetchBookings = createAsyncThunk(
   }
 );
 
+export const fetchFavorites = createAsyncThunk(
+  'booking/fetchFavorites',
+  async (userId, { rejectWithValue }) => {
+    try {
+      const snapshot = await getDocs(collection(db, 'favorites'));
+      const favorites = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      return favorites.filter((favorite) => favorite.userId === userId);
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
 const bookingSlice = createSlice({
   name: 'booking',
   initialState,
@@ -54,6 +70,7 @@ const bookingSlice = createSlice({
         state.status = 'failed';
         state.error = action.payload;
       })
+
       .addCase(fetchBookings.pending, (state) => {
         state.status = 'loading';
       })
@@ -62,6 +79,18 @@ const bookingSlice = createSlice({
         state.bookings = action.payload;
       })
       .addCase(fetchBookings.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.payload;
+      })
+
+      .addCase(fetchFavorites.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(fetchFavorites.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.favorites = action.payload;
+      })
+      .addCase(fetchFavorites.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.payload;
       });

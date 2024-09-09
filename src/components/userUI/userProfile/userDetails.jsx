@@ -7,9 +7,13 @@ import {
   getDocs,
   query,
   where,
+  updateDoc
 } from "firebase/firestore";
 import "./UserProfile.css";
 import { signOut } from "firebase/auth";
+import { fetchBookings } from "../../../Redux/booking/bookingSlice";
+import { useDispatch, useSelector } from "react-redux";
+import FavoriteRooms from "./favourite";
 
 function UserProfile() {
   const [userData, setUserData] = useState({
@@ -18,59 +22,54 @@ function UserProfile() {
     email: "",
   });
   const [favoriteRooms, setFavoriteRooms] = useState([]);
-  const [bookings, setBookings] = useState([]);
-  const [loading, setLoading] = useState(true);
+  // const [bookings, setBookings] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
+  const { bookings, status } = useSelector((state) => state.bookings);
 
   const user = auth.currentUser;
   // console.log(user);
 
   useEffect(() => {
+    if (user) {
+      dispatch(fetchBookings(user.uid));
+    }
+
     const fetchData = async () => {
-      try {
-        if (user) {
-          const userDocRef = doc(db, "users", user.uid);
-          const userDocSnap = await getDoc(userDocRef);
-          if (userDocSnap.exists()) {
-            setUserData(userDocSnap.data());
-          }
-
-          const favRoomsQuery = query(
-            collection(db, "favorites"),
-            where("userId", "==", user.uid)
-          );
-          const favRoomsSnapshot = await getDocs(favRoomsQuery);
-          const favRoomsData = favRoomsSnapshot.docs.map((doc) => doc.data());
-          setFavoriteRooms(favRoomsData);
-
-          const bookingsQuery = query(
-            collection(db, "bookings"),
-            where("userId", "==", user.uid)
-          );
-          const bookingsSnapshot = await getDocs(bookingsQuery);
-          const bookingsData = bookingsSnapshot.docs.map((doc) => doc.data());
-          setBookings(bookingsData);
-        }
-
-        setLoading(false);
-      } catch (error) {
-        console.error("Error fetching user data:", error);
-        setLoading(false);
+      const favRoomsQuery = query(
+        collection(db, "favorites"),
+        where("userId", "==", user.uid)
+      );
+      const favRoomsSnapshot = await getDocs(favRoomsQuery);
+      const favRoomsData = favRoomsSnapshot.docs.map((doc) => doc.data());
+      setFavoriteRooms(favRoomsData);
+      const userDocRef = doc(db, "users", user.uid);
+      const userDocSnap = await getDoc(userDocRef);
+      if (userDocSnap.exists()) {
+        setUserData(userDocSnap.data());
       }
     };
 
-    fetchData();
-  }, [user]);
+    fetchData()
+  }, [dispatch, user]);
 
   const handleChange = (e) => {
+    const { name, value } = event.target;
     setUserData({
       ...userData,
-      [e.target.name]: e.target.value,
+      [name]: value,
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(userData);
+    try {
+      const userDocRef = doc(db, "users", user.uid);
+      await updateDoc(userDocRef, userData); 
+      console.log("User profile updated successfully!");
+    } catch (error) {
+      console.error("Error updating profile:", error);
+    }
   };
 
   if (loading) {
@@ -124,6 +123,7 @@ function UserProfile() {
 
         <div className="favorite-rooms">
           <h3>Favorite Rooms</h3>
+          <FavoriteRooms />
           <div className="rooms-container">
             {favoriteRooms.length > 0 ? (
               favoriteRooms.map((favRoom, index) => (
@@ -144,18 +144,15 @@ function UserProfile() {
         <div className="bookings-section">
           <h3>Your Bookings</h3>
           <div className="bookings-container">
-            {bookings.length > 0 ? (
-              bookings.map((booking, index) => (
-                <div key={index} className="booking-item">
-                  <p>{`Booking for ${booking.roomTitle || "Room"} on ${
-                    booking.checkinDate
-                  }`}</p>
-                  <p>{`Status: ${booking.status || "Pending"}`}</p>
+            {status === "loading" && <p>Loading bookings...</p>}
+            {status === "succeeded" &&
+              bookings.map((booking) => (
+                <div key={booking.id}>
+                  <p>Room: {booking.roomTitle}</p>
+                  <p>Check-in: {booking.checkinDate}</p>
+                  <p>Checkout: {booking.checkoutDate}</p>
                 </div>
-              ))
-            ) : (
-              <p>No bookings found.</p>
-            )}
+              ))}
           </div>
         </div>
       </div>
