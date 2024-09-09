@@ -2,8 +2,6 @@
 
 **SUMMARY**
 
-Real-time Weather app
-
 Users can register and log in using Firebase Authentication.
 
 Users can view a list of available accommodations.
