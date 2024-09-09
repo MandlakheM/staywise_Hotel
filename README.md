@@ -51,3 +51,8 @@ npm install
 # Run development environment
 
 npm run dev
+
+# Admin credentials
+
+admin@example.com
+admin123
