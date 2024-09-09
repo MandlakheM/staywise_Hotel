@@ -5,6 +5,18 @@ import { doc, getDoc, setDoc } from "firebase/firestore";
 import { db } from "../../../config/firebase";
 import "./RoomDetailsPage.css";
 import BookingForm from "./bookingForm";
+import FavoriteRoundedIcon from "@mui/icons-material/FavoriteRounded";
+import WifiRoundedIcon from "@mui/icons-material/WifiRounded";
+import LiveTvRoundedIcon from "@mui/icons-material/LiveTvRounded";
+import LandscapeRoundedIcon from "@mui/icons-material/LandscapeRounded";
+import WavesRoundedIcon from "@mui/icons-material/WavesRounded";
+import AirRoundedIcon from "@mui/icons-material/AirRounded";
+import BalconyRoundedIcon from "@mui/icons-material/BalconyRounded";
+import SpatialAudioRoundedIcon from "@mui/icons-material/SpatialAudioRounded";
+import CleaningServicesRoundedIcon from "@mui/icons-material/CleaningServicesRounded";
+import ApartmentRoundedIcon from "@mui/icons-material/ApartmentRounded";
+import ForestRoundedIcon from "@mui/icons-material/ForestRounded";
+import Footer from "../footer/footer";
 
 function IndividualRoom() {
   const { roomId } = useParams();
@@ -56,43 +68,105 @@ function IndividualRoom() {
   };
 
   return (
-    <div className="room-details-container">
-      <div className="room-info">
-        <div className="image-gallery">
-          <img
-            src={roomDetails.img || "https://via.placeholder.com/"}
-            alt={roomDetails.roomTitle}
-            className="main-image"
-          />
-        </div>
-
-        <div className="room-description">
-          <h2>{roomDetails.roomTitle}</h2>
-          <button type="button" onClick={addToFav}>
-            Add to Favorites
-          </button>
-          <p>{roomDetails.roomDescription}</p>
-          <div className="amenities">
-            <div>
-              <i className="icon">wifi</i>{" "}
-              {roomDetails.wifi ? "wifi" : "No wifi"}
+    <>
+      <div className="room-details-container">
+        <div className="room-info">
+          <div className="image-gallery">
+            <img
+              src={roomDetails.img || "https://via.placeholder.com/"}
+              alt={roomDetails.roomTitle}
+              className="main-image"
+            />
+          </div>
+          <div className="room-description">
+            <div className="fav">
+              <h2>{roomDetails.roomTitle}</h2>
+              <button type="button" onClick={addToFav}>
+                <FavoriteRoundedIcon />
+              </button>
             </div>
-            <div>
-              <i className="icon">lock</i> {roomDetails.tv ? "Safe" : "No tv"}
+
+            <p>{roomDetails.roomDescription}</p>
+            <div className="amenities">
+              <div className="iconPair">
+                <i className="icon">wifi :</i>{" "}
+                {roomDetails.wifi ? <WifiRoundedIcon /> : "No wifi"}
+              </div>
+              <div className="iconPair">
+                <i className="icon">TV :</i>{" "}
+                {roomDetails.tv ? <LiveTvRoundedIcon /> : "No tv"}
+              </div>
+              <div className="iconPair">
+                <i className="icon">mountain view</i>{" "}
+                {roomDetails.mountainView ? (
+                  <LandscapeRoundedIcon />
+                ) : (
+                  "No mountain view"
+                )}
+              </div>
+              <div className="iconPair">
+                <i className="icon">ocean view :</i>{" "}
+                {roomDetails.oceanView ? <WavesRoundedIcon /> : "No ocean view"}
+              </div>
+              <div className="iconPair">
+                <i className="icon">air coditioned ;</i>{" "}
+                {roomDetails.airConditioned ? (
+                  <AirRoundedIcon />
+                ) : (
+                  "No air condition"
+                )}
+              </div>
+              <div className="iconPair">
+                <i className="icon">balcony :</i>{" "}
+                {roomDetails.balcony ? <BalconyRoundedIcon /> : "No balcony"}
+              </div>
+              <div className="iconPair">
+                <i className="icon">sound proofed :</i>{" "}
+                {roomDetails.soundProofed ? (
+                  <SpatialAudioRoundedIcon />
+                ) : (
+                  "No sound proof"
+                )}
+              </div>
+              <div className="iconPair">
+                <i className="icon">room service :</i>{" "}
+                {roomDetails.roomService ? (
+                  <CleaningServicesRoundedIcon />
+                ) : (
+                  "No room service"
+                )}
+              </div>
+              <div className="iconPair">
+                <i className="icon">city view :</i>{" "}
+                {roomDetails.cityView ? (
+                  <ApartmentRoundedIcon />
+                ) : (
+                  "No city view"
+                )}
+              </div>
+              <div className="iconPair">
+                <i className="icon">forest view :</i>{" "}
+                {roomDetails.forestView ? (
+                  <ForestRoundedIcon />
+                ) : (
+                  "No forest view"
+                )}
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <div className="booking-section">
-        <BookingForm
-          roomId={roomId}
-          roomPrice={roomDetails.roomPrice}
-          roomBreakfastFee={roomDetails.breakfastFee}
-          roomDetails={roomDetails}
-        />
+        <div className="booking-section">
+          <BookingForm
+            roomId={roomId}
+            roomPrice={roomDetails.roomPrice}
+            roomBreakfastFee={roomDetails.breakfastFee}
+            roomDetails={roomDetails}
+          />
+        </div>
       </div>
-    </div>
+      <Footer />
+    </>
   );
 }
 

@@ -7,7 +7,7 @@ import {
   getDocs,
   query,
   where,
-  updateDoc
+  updateDoc,
 } from "firebase/firestore";
 import "./UserProfile.css";
 import { signOut } from "firebase/auth";
@@ -50,7 +50,7 @@ function UserProfile() {
       }
     };
 
-    fetchData()
+    fetchData();
   }, [dispatch, user]);
 
   const handleChange = (e) => {
@@ -65,7 +65,7 @@ function UserProfile() {
     e.preventDefault();
     try {
       const userDocRef = doc(db, "users", user.uid);
-      await updateDoc(userDocRef, userData); 
+      await updateDoc(userDocRef, userData);
       console.log("User profile updated successfully!");
     } catch (error) {
       console.error("Error updating profile:", error);
@@ -82,45 +82,59 @@ function UserProfile() {
   };
   return (
     <div className="profile-wrapper gutter">
-      <button onClick={logOut}>Log Out</button>
-
+      <button className="logout" onClick={logOut}>Log Out</button>
       <div className="profile-container">
-        <div className="profile-section">
-          <div className="profile-avatar">
-            <span>👤</span>
+        <div className="loginContainer">
+          <div className="loginBox">
+            {/* <div className="logo">STAYWISE</div> */}
+            <form onSubmit={handleSubmit}>
+              <div className="profile-avatar left">
+                <img
+                  src={userData.img || "https://via.placeholder.com/"}
+                  alt={userData.firstName}
+                  className="main-image"
+                />{" "}
+              </div>
+              <div className="inputGroup">
+                <label>First name</label>
+                <input
+                  type="text"
+                  name="firstName"
+                  placeholder="First name"
+                  value={userData.firstName}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+              <div className="inputGroup">
+                <label>Last name</label>
+                <input
+                  type="text"
+                  name="lastName"
+                  placeholder="Last name"
+                  value={userData.lastName}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+              <div className="inputGroup">
+                <label>Email address</label>
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="Enter email"
+                  onChange={handleChange}
+                  value={userData.email}
+                  required
+                />
+              </div>
+              <button className="loginBtn" type="submit">
+                Edit Profile
+              </button>
+            </form>
           </div>
-          <form onSubmit={handleSubmit}>
-            <label>
-              Name
-              <input
-                type="text"
-                name="name"
-                value={userData.firstName}
-                onChange={handleChange}
-              />
-            </label>
-            <label>
-              Surname
-              <input
-                type="text"
-                name="surname"
-                value={userData.lastName}
-                onChange={handleChange}
-              />
-            </label>
-            <label>
-              Email
-              <input
-                type="email"
-                name="email"
-                value={userData.email}
-                onChange={handleChange}
-              />
-            </label>
-            <button type="submit">Edit Profile</button>
-          </form>
         </div>
-
+        ;
         <div className="favorite-rooms">
           <h3>Favorite Rooms</h3>
           <FavoriteRooms />
@@ -140,7 +154,6 @@ function UserProfile() {
             )}
           </div>
         </div>
-
         <div className="bookings-section">
           <h3>Your Bookings</h3>
           <div className="bookings-container">

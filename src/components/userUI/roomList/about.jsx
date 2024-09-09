@@ -5,6 +5,7 @@ import { db } from "../../../config/firebase";
 import Map from "./map";
 import Roomcard from "./roomcard";
 import RoomDisplay from "./roomDisplay";
+import Footer from "../footer/footer";
 
 function About() {
   const [accommodations, setAccommodations] = useState([]);
@@ -61,68 +62,71 @@ function About() {
   }, []);
 
   return (
-    <div className="bodyList gutter">
-      <div className="listContainer">
-        <div className="list">
-          {/* <div className="sticky">
-            <div className="searchHeading">
-              <p>Search results for your ideal room by :</p>
+    <>
+      <div className="bodyList gutter">
+        <div className="listContainer">
+          <div className="list">
+            <div className="sticky">
+              <div className="searchHeading">
+                <p>Search for your ideal room by :</p>
+              </div>
+
+              <div className="filters">
+                <div className="minprice">
+                  <label htmlFor="minPrice">Min price</label>
+                  <input
+                    type="number"
+                    name="minPrice"
+                    value={minPrice}
+                    onChange={(e) => setMinPrice(e.target.value)}
+                  />
+                </div>
+                <div className="maxprice">
+                  <label htmlFor="maxPrice">Max price</label>
+                  <input
+                    type="number"
+                    name="maxPrice"
+                    value={maxPrice}
+                    onChange={(e) => setMaxPrice(e.target.value)}
+                  />
+                </div>
+                <div className="bedCount">
+                  <label htmlFor="bedCount">Bed count</label>
+                  <input
+                    type="number"
+                    name="bedCount"
+                    value={bedCount}
+                    onChange={(e) => setBedCount(e.target.value)}
+                  />
+                </div>
+                <div className="bathroomCount">
+                  <label htmlFor="bathroomCount">Bathroom count</label>
+                  <input
+                    type="number"
+                    name="bathroomCount"
+                    value={bathroomCount}
+                    onChange={(e) => setBathroomCount(e.target.value)}
+                  />
+                </div>
+                <div className="filterButton">
+                  <button onClick={handleSearch}>Search</button>
+                </div>
+              </div>
             </div>
 
-            <div className="filters">
-              <div className="minprice">
-                <label htmlFor="minPrice">Min price</label>
-                <input
-                  type="number"
-                  name="minPrice"
-                  value={minPrice}
-                  onChange={(e) => setMinPrice(e.target.value)} 
-                />
-              </div>
-              <div className="maxprice">
-                <label htmlFor="maxPrice">Max price</label>
-                <input
-                  type="number"
-                  name="maxPrice"
-                  value={maxPrice}
-                  onChange={(e) => setMaxPrice(e.target.value)} 
-                />
-              </div>
-              <div className="bedCount">
-                <label htmlFor="bedCount">Bed count</label>
-                <input
-                  type="number"
-                  name="bedCount"
-                  value={bedCount}
-                  onChange={(e) => setBedCount(e.target.value)} 
-                />
-              </div>
-              <div className="bathroomCount">
-                <label htmlFor="bathroomCount">Bathroom count</label>
-                <input
-                  type="number"
-                  name="bathroomCount"
-                  value={bathroomCount}
-                  onChange={(e) => setBathroomCount(e.target.value)} 
-                />
-              </div>
-              <div className="filterButton">
-                <button onClick={handleSearch}>Search</button> 
-              </div>
-            </div>
-          </div> */}
+            {accommodations.map((room) => (
+              <RoomDisplay key={room.id} room={room} />
+            ))}
+            {/* <RoomDisplay /> */}
+          </div>
 
-          {accommodations.map((room) => (
-            <RoomDisplay key={room.id} room={room} />
-          ))}
-          {/* <RoomDisplay /> */}
-        </div>
-
-        {/* <div className="mapContainer">
+          {/* <div className="mapContainer">
           <Map />
         </div> */}
+        </div>
       </div>
-    </div>
+      <Footer />
+    </>
   );
 }
 

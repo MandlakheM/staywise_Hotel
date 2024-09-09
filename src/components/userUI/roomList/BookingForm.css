@@ -2,10 +2,16 @@
     width: 320px;
     padding: 20px;
     border-radius: 8px;
-    background-color: #fff;
+    background-color: var(--white);
     box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
     font-family: Arial, sans-serif;
+    transition: 0.3s ease-in-out;
+
   }
+
+  .booking-container:hover {
+    transform: scale(1.1);
+}
   
   h2 {
     font-size: 20px;
@@ -14,7 +20,7 @@
   
   h2 span {
     font-size: 14px;
-    color: #666;
+    color: var(--text-light);
   }
   
   .date-section {
@@ -31,7 +37,7 @@
   
   .date-box label {
     font-size: 12px;
-    color: #666;
+    color: var(--text-light);
     margin-bottom: 5px;
   }
   
@@ -48,7 +54,7 @@
   
   .guests-section label {
     font-size: 12px;
-    color: #666;
+    color: var(--text-light);
     margin-bottom: 5px;
     display: block;
   }
@@ -64,7 +70,7 @@
   .reserve-button {
     width: 100%;
     padding: 12px;
-    background-color: #f50057;
+    background-color: var( --primary-color);
     color: #fff;
     border: none;
     border-radius: 4px;
@@ -74,7 +80,7 @@
   }
   
   .reserve-button:hover {
-    background-color: #d4004c;
+    background-color:  var(--primary-color-dark);
   }
   
   .price-breakdown {

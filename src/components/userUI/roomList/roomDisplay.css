@@ -8,6 +8,7 @@
     overflow: hidden;
     background-color: white;
     transition: transform 0.3s ease;
+    min-height: 400px;
   }
   
   .room-card:hover {
@@ -39,7 +40,7 @@
   .room-card-price {
     font-size: 1.2rem;
     font-weight: 600;
-    color: #f5a623; /* Orange color for price */
+    color: #f5a623;
   }
   
   .room-card-price small {
@@ -47,4 +48,9 @@
     color: #999;
     margin-left: 0.2rem;
   }
+
+  .buttons button{
+    background-color: var(--primary-color);
+  }
+  
   

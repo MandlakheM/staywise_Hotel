@@ -11,8 +11,11 @@ import StarIcon from "@mui/icons-material/Star";
 import person1 from "../../../assets/avataaars (3).png";
 import person2 from "../../../assets/avataaars (4).png";
 import Footer from "../footer/footer";
+import SearchIcon from "@mui/icons-material/Search";
+import { useNavigate } from "react-router-dom";
 
 function Home() {
+  const navigate = useNavigate()
   return (
     <>
       <section className="body">
@@ -45,8 +48,8 @@ function Home() {
                 <p>Add guests</p>
               </div>
             </form>
-            <button class="btn">
-              <i class="ri-search-line"></i>
+            <button class="btn" onClick={()=>navigate("/about")}>
+              <SearchIcon />
             </button>
           </div>
         </div>

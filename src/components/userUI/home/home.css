@@ -119,6 +119,11 @@
   transition: 0.3s;
 }
 
+.btn{
+  display: flex;
+  align-items: center;
+}
+
 .bookingContainer .btn:hover {
   background-color: var(--primary-color-dark);
 }

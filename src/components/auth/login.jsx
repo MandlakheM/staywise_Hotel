@@ -1,8 +1,9 @@
 import React, { useState } from "react";
+import "./signup.css";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../config/firebase";
 
-function Login() {
+const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -14,7 +15,7 @@ function Login() {
         const user = userCredentials.user;
 
         const userType = email === "admin@example.com" ? "Admin" : "User";
-        
+
         localStorage.setItem("loggedIn", true);
         localStorage.setItem("userType", userType);
 
@@ -31,40 +32,44 @@ function Login() {
   }
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <h3>Login</h3>
-        <div>
-          <label>Email address</label>
-          <input
-            type="email"
-            placeholder="Enter email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-        </div>
+    <div className="loginContainer">
+      <div className="loginBox">
+        {/* <div className="logo">STAYWISE</div> */}
+        <h2>Welcome back</h2>
+        <p>Please enter your details to login.</p>
+        <form onSubmit={handleSubmit}>
+          <div className="inputGroup">
+            <label htmlFor="email">Email</label>
+            <input
+              type="email"
+              id="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </div>
+          <div className="inputGroup">
+            <label htmlFor="password">Password</label>
+            <input
+              type="password"
+              id="password"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
+          <button className="loginBtn" type="submit">
+            Login
+          </button>
+        </form>
 
-        <div>
-          <label>Password</label>
-          <input
-            type="password"
-            placeholder="Enter password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
+        <div className="register">
+          Don't have an account? <a href="/register">Register</a>
         </div>
-
-        <div>
-          <button type="submit">Submit</button>
-        </div>
-        <p>
-          <a href="/register">Register</a>
-        </p>
-      </form>
+      </div>
     </div>
   );
-}
+};
 
 export default Login;

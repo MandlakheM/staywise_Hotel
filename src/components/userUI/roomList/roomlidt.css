@@ -11,7 +11,7 @@
 .list {
   height: 100vh;
   width: 100%;
-  overflow: scroll;
+  /* overflow: scroll; */
   display: flex;
   flex-wrap: wrap;
   gap: 2rem;
@@ -42,11 +42,12 @@
 }
 
 .sticky {
-  background-color: #FAEFF1;
+  background-color: var(--white);
   position: sticky;
   top: 0;
   z-index: 1;
   padding: 10px;
+  width: 100%;
 }
 
 .minprice input,
@@ -70,6 +71,7 @@
   height: 2.5rem;
   width: 5rem;
   align-self: flex-end;
+  background-color: var( --primary-color);
 }
 
 .img {

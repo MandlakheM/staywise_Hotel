@@ -165,6 +165,7 @@ function AddRoomModal({ deactivateModal, currentAccommodation }) {
             <div>
               <label>Choose Room Amenities (Optional) </label>
               <div>
+                
                 <input
                   type="checkbox"
                   name="roomService"
