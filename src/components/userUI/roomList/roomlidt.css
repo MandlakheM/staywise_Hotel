@@ -10,15 +10,18 @@
 
 .list {
   height: 100vh;
-  width: 70%;
+  width: 100%;
   overflow: scroll;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
 }
 
-.mapContainer {
+/* .mapContainer {
   background-color: #ffe548;
   height: 100vh;
   width: 30%;
-}
+} */
 
 .searchHeading {
   font-size: 1.5rem;

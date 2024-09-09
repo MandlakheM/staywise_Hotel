@@ -28,7 +28,7 @@ function roomcard({ room }) {
         <div className="buttons">
           <button type="button" onClick={bookingClicked}>
             book now
-          </button>{" "}
+          </button>
         </div>
       </div>
     </div>

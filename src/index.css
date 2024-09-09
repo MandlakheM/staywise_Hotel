@@ -4,7 +4,7 @@ html,
 body {
   width: 100%;
   overflow-x: hidden;
-  background-color: #FAEFF1;
+  background-color: var(--white);
 }
 
 *,
@@ -21,10 +21,21 @@ video,
 iframe {
   max-width: 100%;
   height: auto;
+  display: flex;
 }
 
 a {
   text-decoration: none;
   color: black;
+}
+
+:root {
+  --primary-color: #2c3855;
+  --primary-color-dark: #435681;
+  --text-dark: #333333;
+  --text-light: #767268;
+  --extra-light: #f3f4f6;
+  --white: #ffffff;
+  --max-width: 1200px;
 }
 

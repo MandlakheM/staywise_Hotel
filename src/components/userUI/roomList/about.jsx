@@ -1,34 +1,44 @@
 import React, { useState, useEffect } from "react";
 import "./roomlidt.css";
-import { collection, getDocs, query, where } from "firebase/firestore"; 
+import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "../../../config/firebase";
 import Map from "./map";
 import Roomcard from "./roomcard";
+import RoomDisplay from "./roomDisplay";
 
 function About() {
   const [accommodations, setAccommodations] = useState([]);
-  const [minPrice, setMinPrice] = useState(""); 
-  const [maxPrice, setMaxPrice] = useState(""); 
-  const [bedCount, setBedCount] = useState(""); 
-  const [bathroomCount, setBathroomCount] = useState(""); 
+  const [minPrice, setMinPrice] = useState("");
+  const [maxPrice, setMaxPrice] = useState("");
+  const [bedCount, setBedCount] = useState("");
+  const [bathroomCount, setBathroomCount] = useState("");
 
   const fetchData = async () => {
     try {
       const colRef = collection(db, "accommodationList");
-      
+
       let roomQuery = colRef;
 
       if (minPrice) {
-        roomQuery = query(roomQuery, where("roomPrice", ">=", Number(minPrice)));
+        roomQuery = query(
+          roomQuery,
+          where("roomPrice", ">=", Number(minPrice))
+        );
       }
       if (maxPrice) {
-        roomQuery = query(roomQuery, where("roomPrice", "<=", Number(maxPrice)));
+        roomQuery = query(
+          roomQuery,
+          where("roomPrice", "<=", Number(maxPrice))
+        );
       }
       if (bedCount) {
         roomQuery = query(roomQuery, where("bedCount", "==", Number(bedCount)));
       }
       if (bathroomCount) {
-        roomQuery = query(roomQuery, where("bathroomCount", "==", Number(bathroomCount)));
+        roomQuery = query(
+          roomQuery,
+          where("bathroomCount", "==", Number(bathroomCount))
+        );
       }
 
       const snapshot = await getDocs(roomQuery);
@@ -43,18 +53,18 @@ function About() {
   };
 
   const handleSearch = () => {
-    fetchData(); 
+    fetchData();
   };
 
   useEffect(() => {
-    fetchData(); 
+    fetchData();
   }, []);
 
   return (
     <div className="bodyList gutter">
       <div className="listContainer">
         <div className="list">
-          <div className="sticky">
+          {/* <div className="sticky">
             <div className="searchHeading">
               <p>Search results for your ideal room by :</p>
             </div>
@@ -100,16 +110,17 @@ function About() {
                 <button onClick={handleSearch}>Search</button> 
               </div>
             </div>
-          </div>
+          </div> */}
 
           {accommodations.map((room) => (
-            <Roomcard key={room.id} room={room} />
+            <RoomDisplay key={room.id} room={room} />
           ))}
+          {/* <RoomDisplay /> */}
         </div>
 
-        <div className="mapContainer">
+        {/* <div className="mapContainer">
           <Map />
-        </div>
+        </div> */}
       </div>
     </div>
   );

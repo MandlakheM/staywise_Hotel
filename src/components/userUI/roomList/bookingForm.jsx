@@ -6,6 +6,7 @@ import "./BookingForm.css";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { makeBooking } from "../../../Redux/booking/bookingSlice";
+import StripeCheckout from "react-stripe-checkout";
 
 function BookingForm({ roomId, roomPrice, roomBreakfastFee, roomDetails }) {
   const [guests, setGuests] = useState(1);
@@ -39,25 +40,57 @@ function BookingForm({ roomId, roomPrice, roomBreakfastFee, roomDetails }) {
     });
   };
 
-  const reserve = () => {
-    if (user && roomId) {
-      const bookingData = {
-        userId: user.uid,
-        roomId,
-        guests,
-        checkinDate,
-        checkoutDate,
-        totalAmount: totalBeforeTaxes,
-        userDetails: { ...userDetails },
-        timestamp: new Date(),
-        ...roomDetails,
-      };
-      dispatch(makeBooking(bookingData));
-      // alert("Booking successful!");
-      setContinueBooking(false);
-      navigate("/userDetails");
-    } else {
-      alert("You must be logged in to make a booking.");
+  // const reserve = () => {
+  //   if (user && roomId) {
+  //     const bookingData = {
+  //       userId: user.uid,
+  //       roomId,
+  //       guests,
+  //       checkinDate,
+  //       checkoutDate,
+  //       totalAmount: totalBeforeTaxes,
+  //       // userDetails: { ...userDetails },
+  //       timestamp: new Date(),
+  //       ...roomDetails,
+  //     };
+  //     dispatch(makeBooking(bookingData));
+  //     // alert("Booking successful!");
+  //     setContinueBooking(false);
+  //     navigate("/userDetails");
+  //   } else {
+  //     alert("You must be logged in to make a booking.");
+  //   }
+  // };
+
+  const onToken = async (token) => {
+    try {
+      if (user && roomId) {
+        const bookingData = {
+          userId: user.uid,
+          roomId,
+          guests,
+          checkinDate,
+          checkoutDate,
+          totalAmount: totalBeforeTaxes,
+          token, 
+          timestamp: new Date(),
+          ...roomDetails,
+        };
+
+        const bookingsCollectionRef = collection(db, "bookings");
+        await addDoc(bookingsCollectionRef, bookingData);
+
+        dispatch(makeBooking(bookingData));
+
+        alert("Booking and payment successful!");
+        setContinueBooking(false);
+        navigate("/userDetails");
+      } else {
+        alert("You must be logged in to make a booking.");
+      }
+    } catch (error) {
+      console.error("Error processing booking:", error);
+      alert("There was an error processing your booking.");
     }
   };
 
@@ -93,54 +126,59 @@ function BookingForm({ roomId, roomPrice, roomBreakfastFee, roomDetails }) {
 
       <button
         className="reserve-button"
-        onClick={() => setContinueBooking(true)}
+        onClick={() => setContinueBooking(!continueBooking)}
       >
         Reserve
       </button>
 
       {continueBooking && (
-        <div className="payment-form">
-          <input
-            type="text"
-            name="name"
-            placeholder="Name"
-            onChange={handleInputChange}
-          />
-          <input
-            type="text"
-            name="address"
-            placeholder="Address"
-            onChange={handleInputChange}
-          />
-          <input
-            type="text"
-            name="postalCode"
-            placeholder="Postal Code"
-            onChange={handleInputChange}
-          />
-          <input
-            type="text"
-            name="cardNumber"
-            placeholder="Card Number"
-            onChange={handleInputChange}
-          />
-          <input
-            type="text"
-            name="expirationDate"
-            placeholder="Expiration Date"
-            onChange={handleInputChange}
-          />
-          <input
-            type="text"
-            name="cvv"
-            placeholder="CVV"
-            onChange={handleInputChange}
-          />
-
-          <button className="payment-button" onClick={reserve}>
-            Make Payment
-          </button>
-        </div>
+        <>
+          <div className="payment-form">
+            <input
+              type="text"
+              name="name"
+              placeholder="Name"
+              onChange={handleInputChange}
+            />
+            <input
+              type="text"
+              name="address"
+              placeholder="Address"
+              onChange={handleInputChange}
+            />
+            <input
+              type="text"
+              name="postalCode"
+              placeholder="Postal Code"
+              onChange={handleInputChange}
+            />
+            {/* <input
+              type="text"
+              name="cardNumber"
+              placeholder="Card Number"
+              onChange={handleInputChange}
+            />
+            <input
+              type="text"
+              name="expirationDate"
+              placeholder="Expiration Date"
+              onChange={handleInputChange}
+            />
+            <input
+              type="text"
+              name="cvv"
+              placeholder="CVV"
+              onChange={handleInputChange}
+            /> */}
+            <StripeCheckout
+              token={onToken}
+              stripeKey="pk_test_51PvyjyEfeDWghDPt7VoSfmQMd8KyIBfZLxW6FSI3aaH974SQGLN3CL4MOdZ5YhFyiYR9WU9weKc3A0rh9s9skIYf00b8hDIMOe"
+            />
+            {/* <button className="payment-button" onClick={reserve}>
+              Make Payment
+            </button> */}
+          </div>
+        </>
       )}
 
       <p>You won't be charged yet</p>

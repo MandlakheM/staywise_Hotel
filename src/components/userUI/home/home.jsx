@@ -1,14 +1,47 @@
 import React from "react";
 import "./home.css";
 import SpaOutlinedIcon from "@mui/icons-material/SpaOutlined";
-import LocalDiningOutlinedIcon from '@mui/icons-material/LocalDiningOutlined';
-import PoolOutlinedIcon from '@mui/icons-material/PoolOutlined';
+import LocalDiningOutlinedIcon from "@mui/icons-material/LocalDiningOutlined";
+import PoolOutlinedIcon from "@mui/icons-material/PoolOutlined";
 
 function Home() {
   return (
-    <body className="body">
-      <section className="homeContainer gutter">
-        <div className="home gutter"></div>
+    <>
+      <section className="body">
+        <div className="home gutter">
+          <div class="homeContent">
+            <h1>Enjoy Your Dream Vacation</h1>
+            <p>Experience luxury at Staywise, your ultimate destination.</p>
+          </div>
+          <div class="bookingContainer">
+            <form>
+              <div class="formGroup">
+                <div class="inputGroup">
+                  <input type="date" />
+                  {/* <label>Check In</label> */}
+                </div>
+                <p>Add date</p>
+              </div>
+              <div class="formGroup">
+                <div class="inputGroup">
+                  <input type="date" />
+                  {/* <label>Check Out</label> */}
+                </div>
+                <p>Add date</p>
+              </div>
+              <div class="formGroup">
+                <div class="inputGroup">
+                  <input type="number" min={1} name="guestNumber" />
+                  <label htmlFor="guestNumber">Guests</label>
+                </div>
+                <p>Add guests</p>
+              </div>
+            </form>
+            <button class="btn">
+              <i class="ri-search-line"></i>
+            </button>
+          </div>
+        </div>
       </section>
       <section className="amenitiesContainer gutter">
         <div className="amenitiesText">
@@ -37,9 +70,11 @@ function Home() {
         <div className="amenitiesPic"></div>
       </section>
       <section className="offeringsContainer gutter">
-      <h3 className="homeHeading">Experience Unparalleled Luxury in the Heart of Sandton</h3>
+        <h3 className="homeHeading">
+          Experience Unparalleled Luxury in the Heart of Sandton
+        </h3>
       </section>
-    </body>
+    </>
   );
 }
 
