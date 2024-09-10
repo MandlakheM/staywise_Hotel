@@ -14,44 +14,39 @@ function About() {
   const [bedCount, setBedCount] = useState("");
   const [bathroomCount, setBathroomCount] = useState("");
 
-  const fetchData = async () => {
-    try {
-      const colRef = collection(db, "accommodationList");
-
-      let roomQuery = colRef;
-
-      if (minPrice) {
-        roomQuery = query(
-          roomQuery,
-          where("roomPrice", ">=", Number(minPrice))
-        );
+    const fetchData = async () => {
+      try {
+        const colRef = collection(db, "accommodationList");
+  
+        let conditions = [];
+  
+        if (minPrice) {
+          conditions.push(where("roomPrice", ">=", Number(minPrice)));
+        }
+        if (maxPrice) {
+          conditions.push(where("roomPrice", "<=", Number(maxPrice)));
+        }
+        if (bedCount) {
+          conditions.push(where("bedCount", "==", Number(bedCount)));
+        }
+        if (bathroomCount) {
+          conditions.push(where("bathroomCount", "==", Number(bathroomCount)));
+        }
+  
+        const roomQuery = conditions.length
+          ? query(colRef, ...conditions)
+          : colRef;
+  
+        const snapshot = await getDocs(roomQuery);
+        const accommodationList = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setAccommodations(accommodationList);
+      } catch (error) {
+        console.error("Error fetching documents:", error);
       }
-      if (maxPrice) {
-        roomQuery = query(
-          roomQuery,
-          where("roomPrice", "<=", Number(maxPrice))
-        );
-      }
-      if (bedCount) {
-        roomQuery = query(roomQuery, where("bedCount", "==", Number(bedCount)));
-      }
-      if (bathroomCount) {
-        roomQuery = query(
-          roomQuery,
-          where("bathroomCount", "==", Number(bathroomCount))
-        );
-      }
-
-      const snapshot = await getDocs(roomQuery);
-      const accommodationList = snapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
-      setAccommodations(accommodationList);
-    } catch (error) {
-      console.error("Error fetching documents:", error);
-    }
-  };
+    };
 
   const handleSearch = () => {
     fetchData();
@@ -114,9 +109,13 @@ function About() {
               </div>
             </div>
 
-            {accommodations.map((room) => (
-              <RoomDisplay key={room.id} room={room} />
-            ))}
+            {accommodations.length === 0 ? (
+              <p>No rooms found matching your criteria.</p>
+            ) : (
+              accommodations.map((room) => (
+                <RoomDisplay key={room.id} room={room} />
+              ))
+            )}
             {/* <RoomDisplay /> */}
           </div>
 

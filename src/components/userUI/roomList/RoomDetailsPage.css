@@ -96,3 +96,8 @@
 .image-gallery:hover img {
   transform: scale(1.01);
 }
+
+.buttContainer{
+  display: flex;
+  gap: 1rem;
+}

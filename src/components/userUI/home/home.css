@@ -5,6 +5,7 @@
   margin: auto;
   padding: 5rem 1rem;
   padding: 1rem 1rem 5rem 1rem;
+  min-height: 100vh;
 }
 
 .home {
@@ -16,6 +17,7 @@
   background-repeat: no-repeat;
   border-radius: 2rem;
   overflow: hidden;
+  min-height: 80vh;
 }
 
 /* linear-gradient(

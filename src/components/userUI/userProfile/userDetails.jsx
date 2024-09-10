@@ -14,6 +14,7 @@ import { signOut } from "firebase/auth";
 import { fetchBookings } from "../../../Redux/booking/bookingSlice";
 import { useDispatch, useSelector } from "react-redux";
 import FavoriteRooms from "./favourite";
+import RateModal from "./rateModal";
 
 function UserProfile() {
   const [userData, setUserData] = useState({
@@ -24,6 +25,10 @@ function UserProfile() {
   const [favoriteRooms, setFavoriteRooms] = useState([]);
   // const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [isRating, setIsRating] = useState(false);
+  const [ratingRoomId, setRatingRoomId] = useState(false);
+  const [ratingUserId, setRatingUserId] = useState(false);
+
   const dispatch = useDispatch();
   const { bookings, status } = useSelector((state) => state.bookings);
 
@@ -80,9 +85,20 @@ function UserProfile() {
     window.location.href = "./login";
     signOut();
   };
+
+  const handleModal = (id, userId) => {
+    setIsRating(!isRating);
+    setRatingRoomId(id);
+    setRatingUserId(userId);
+
+    // console.log(userID, roomId);
+  };
+
   return (
     <div className="profile-wrapper gutter">
-      <button className="logout" onClick={logOut}>Log Out</button>
+      <button className="logout" onClick={logOut}>
+        Log Out
+      </button>
       <div className="profile-container">
         <div className="loginContainer">
           <div className="loginBox">
@@ -134,7 +150,7 @@ function UserProfile() {
             </form>
           </div>
         </div>
-        ;
+
         <div className="favorite-rooms">
           <h3>Favorite Rooms</h3>
           <FavoriteRooms />
@@ -157,18 +173,40 @@ function UserProfile() {
         <div className="bookings-section">
           <h3>Your Bookings</h3>
           <div className="bookings-container">
-            {status === "loading" && <p>Loading bookings...</p>}
-            {status === "succeeded" &&
+            {bookings.length > 0 ? (
               bookings.map((booking) => (
-                <div key={booking.id}>
-                  <p>Room: {booking.roomTitle}</p>
+                <div key={booking.id} className="room-item">
+                  <img
+                    src={booking.img || "https://via.placeholder.com/150"}
+                    alt={`Booking`}
+                  />
+                  <p>{booking.roomTitle || "Room Title"}</p>
                   <p>Check-in: {booking.checkinDate}</p>
                   <p>Checkout: {booking.checkoutDate}</p>
+                  <button
+                    type="button"
+                    className="logout"
+                    onClick={() => handleModal(booking.id, user.uid)}
+                    // userId={user.uid}
+                  >
+                    Rate room
+                  </button>
                 </div>
-              ))}
+              ))
+            ) : (
+              <p>No bookings yet.</p>
+            )}
           </div>
         </div>
       </div>
+
+      {isRating && (
+        <RateModal
+          handleModal={handleModal}
+          roomId={ratingRoomId}
+          userId={ratingUserId}
+        />
+      )}
 
       <div className="notifications">
         <h3>Notifications</h3>
@@ -181,3 +219,23 @@ function UserProfile() {
 }
 
 export default UserProfile;
+
+{
+  /* <div className="bookings-container">
+  {bookings.length > 0 ? (
+    bookings.map((booking) => (
+      <div key={booking.id} className="room-item">
+        <img
+          src={booking.img || "https://via.placeholder.com/150"}
+          alt={`Favorite Room ${index + 1}`}
+        />
+        <p>{booking.roomTitle || "Room Title"}</p>
+        <p>Check-in: {booking.checkinDate}</p>
+        <p>Checkout: {booking.checkoutDate}</p>
+      </div>
+    ))
+  ) : (
+    <p>No bookings yet.</p>
+  )}
+</div>; */
+}

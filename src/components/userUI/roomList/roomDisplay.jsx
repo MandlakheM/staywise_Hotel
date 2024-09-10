@@ -1,8 +1,11 @@
 import React from "react";
 import "./roomDisplay.css";
 import { useNavigate } from "react-router-dom";
+import Rating from "@mui/material/Rating";
 
 const RoomDisplay = ({ room }) => {
+  const [value, setValue] = React.useState(5);
+
   const navigate = useNavigate();
 
   const bookingClicked = () => {
@@ -28,6 +31,7 @@ const RoomDisplay = ({ room }) => {
           <button type="button" onClick={bookingClicked}>
             book now
           </button>
+          <Rating name="read-only" value={value} readOnly />
         </div>
       </div>
     </div>

@@ -17,6 +17,7 @@ import CleaningServicesRoundedIcon from "@mui/icons-material/CleaningServicesRou
 import ApartmentRoundedIcon from "@mui/icons-material/ApartmentRounded";
 import ForestRoundedIcon from "@mui/icons-material/ForestRounded";
 import Footer from "../footer/footer";
+import ShareIcon from "@mui/icons-material/Share";
 
 function IndividualRoom() {
   const { roomId } = useParams();
@@ -67,6 +68,25 @@ function IndividualRoom() {
     }
   };
 
+  const shareRoom = () => {
+    const roomUrl = window.location.href;
+
+    if (navigator.share) {
+      navigator
+        .share({
+          title: roomDetails.roomTitle,
+          text: `Check out this room: ${roomDetails.roomTitle}`,
+          url: roomUrl,
+        })
+        .then(() => console.log("Shared successfully"))
+        .catch((error) => console.error("Error sharing", error));
+    } else {
+      navigator.clipboard.writeText(roomUrl).then(() => {
+        alert("Room link copied to clipboard!");
+      });
+    }
+  };
+
   return (
     <>
       <div className="room-details-container">
@@ -81,9 +101,14 @@ function IndividualRoom() {
           <div className="room-description">
             <div className="fav">
               <h2>{roomDetails.roomTitle}</h2>
-              <button type="button" onClick={addToFav}>
-                <FavoriteRoundedIcon />
-              </button>
+              <div className="buttContainer">
+                <button type="button" onClick={addToFav}>
+                  <FavoriteRoundedIcon />
+                </button>
+                <button type="button" onClick={shareRoom}>
+                  <ShareIcon />{" "}
+                </button>
+              </div>
             </div>
 
             <p>{roomDetails.roomDescription}</p>

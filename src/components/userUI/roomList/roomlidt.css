@@ -70,7 +70,7 @@
 .filterButton button {
   height: 2.5rem;
   width: 5rem;
-  align-self: flex-end;
+  /* align-self: flex-end; */
   background-color: var( --primary-color);
 }
 

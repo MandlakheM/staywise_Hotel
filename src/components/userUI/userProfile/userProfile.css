@@ -104,7 +104,7 @@ button:hover {
 }
 
 .logout {
-  width: 80px;
+  width: 100px;
   height: 40px;
   background-color: var(--primary-color);
 
@@ -112,4 +112,9 @@ button:hover {
 
 .logout:hover {
   background-color: var(--primary-color-dark);
+}
+
+.bookings-container{
+  display: flex;
+  gap: 3rem;
 }
