@@ -46,12 +46,12 @@ function Accommodation() {
   };
 
   const handleUpdate = (accommodation) => {
-    setSelectedAccommodation(accommodation); 
+    setSelectedAccommodation(accommodation);
     setModal(true);
   };
 
   const handleDelete = async (accommodationId) => {
-    await deleteDoc(doc(db, "accommodationList", accommodationId)); 
+    await deleteDoc(doc(db, "accommodationList", accommodationId));
   };
 
   return (
@@ -73,7 +73,7 @@ function Accommodation() {
               accommodations.map((accommodation) => (
                 <div key={accommodation.id}>
                   <Card
-                    sx={{ maxWidth: 345, marginBottom: "20px" }}
+                    sx={{ width: 300, marginBottom: "20px"}}
                     key={accommodation.id}
                   >
                     <CardMedia
@@ -86,7 +86,7 @@ function Accommodation() {
                         {accommodation.roomTitle}
                       </Typography>
                       <Typography variant="body2" color="text.secondary">
-                        {accommodation.roomDescription}
+                        {/* {accommodation.roomDescription} */}
                       </Typography>
                       <Typography variant="body2" color="text.secondary">
                         Price: {accommodation.roomPrice}
@@ -98,14 +98,16 @@ function Accommodation() {
                         Address: {accommodation.address}
                       </Typography>
                     </CardContent>
-                    <CardActions>
-                      <Button onClick={() => handleUpdate(accommodation)}>
-                        Update
-                      </Button>
-                      <Button onClick={() => handleDelete(accommodation.id)}>
-                        Delete
-                      </Button>
-                    </CardActions>
+                    <div className="cardActions">
+                      <CardActions>
+                        <Button onClick={() => handleUpdate(accommodation)}>
+                          Update
+                        </Button>
+                        <Button onClick={() => handleDelete(accommodation.id)}>
+                          Delete
+                        </Button>
+                      </CardActions>
+                    </div>
                   </Card>
                 </div>
               ))

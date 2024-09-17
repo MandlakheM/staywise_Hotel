@@ -6,6 +6,7 @@ import Map from "./map";
 import Roomcard from "./roomcard";
 import RoomDisplay from "./roomDisplay";
 import Footer from "../footer/footer";
+import { p } from "framer-motion/client";
 
 function About() {
   const [accommodations, setAccommodations] = useState([]);
@@ -47,6 +48,14 @@ function About() {
         console.error("Error fetching documents:", error);
       }
     };
+
+    if (!accommodations) {
+      return (
+        <div className="loaderCont">
+          <div className="loader"></div>
+        </div>
+      );
+    }
 
   const handleSearch = () => {
     fetchData();
@@ -110,7 +119,9 @@ function About() {
             </div>
 
             {accommodations.length === 0 ? (
-              <p>No rooms found matching your criteria.</p>
+                <div className="loaderCont">
+                <div className="loader"></div>
+              </div>
             ) : (
               accommodations.map((room) => (
                 <RoomDisplay key={room.id} room={room} />

@@ -42,7 +42,11 @@ function IndividualRoom() {
   }, [roomId]);
 
   if (!roomDetails) {
-    return <div>Loading...</div>;
+    return (
+      <div className="loaderCont">
+        <div className="loader"></div>
+      </div>
+    );
   }
 
   const auth = getAuth();
@@ -185,7 +189,7 @@ function IndividualRoom() {
           <BookingForm
             roomId={roomId}
             roomPrice={roomDetails.roomPrice}
-            roomBreakfastFee={roomDetails.breakfastFee}
+            roomBreakfastFee={roomDetails.breakfastPrice}
             roomDetails={roomDetails}
           />
         </div>

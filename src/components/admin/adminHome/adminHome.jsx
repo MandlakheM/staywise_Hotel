@@ -14,37 +14,37 @@ function AdminHome() {
 
   const display = () => {
     switch (currentPage) {
-      case "overview":
-        return <Overview />;
+      // case "overview":
+      //   return <Overview />;
       case "accommodations":
         return <Accommodation />;
       case "reservations":
         return <Reservations />;
-      // default:
-      //   return <Overview />;
+      default:
+        return <Accommodation />;
     }
   };
 
   return (
     <div>
-      <h3>Welcome Admin</h3>
+      {/* <h3>Welcome Admin</h3> */}
       {/* <button onClick={logOut}>Log Out</button> */}
 
       <div className="adminContainer">
         <div className="asideContainer">
           <aside>
-            <header>
+            {/* <header>
               <div>
                 <span>Admin Name</span>
               </div>
-            </header>
+            </header> */}
             <nav>
               <ul className="asideLinks">
-                <li>
+                {/* <li>
                   <button onClick={() => setCurrentPage("overview")}>
                     Dashboard
                   </button>
-                </li>
+                </li> */}
                 <li>
                   <button onClick={() => setCurrentPage("accommodations")}>
                     Accommodations

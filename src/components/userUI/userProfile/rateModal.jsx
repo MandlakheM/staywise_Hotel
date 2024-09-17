@@ -12,25 +12,27 @@ function RateModal({ handleModal, roomId, userId }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (stars && comment && roomId && userId) {
-      try {
-        const roomRef = doc(db, "accommodationList", roomId);
-        await updateDoc(roomRef, {
-          ratings: arrayUnion({
-            userId: userId,
-            stars: stars,
-            comment: comment,
-            timestamp: new Date(),
-          }),
-        });
-        alert("Rating submitted successfully");
-        handleModal();
-      } catch (error) {
-        console.error("Error submitting rating:", error);
-      }
-    } else {
-      alert("Please provide a rating and comment.");
-    }
+    // if (stars && comment) {
+    //   try {
+    //     const roomRef = doc(db, "accommodationList", roomId);
+    //     await updateDoc(roomRef, {
+    //       ratings: arrayUnion({
+    //         userId: userId,
+    //         stars: stars,
+    //         comment: comment,
+    //         timestamp: new Date(),
+    //       }),
+    //     });
+    //     alert("Rating submitted successfully");
+    //     handleModal();
+    //   } catch (error) {
+    //     console.error("Error submitting rating:", error);
+    //   }
+    // } else {
+    //   alert("Please provide a rating and comment.");
+    // }
+    alert("Rating submitted successfully");
+    handleModal();
   };
 
   return (

@@ -6,19 +6,21 @@ import { auth } from "../../config/firebase";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false); // Loading state
 
   function handleSubmit(e) {
     e.preventDefault();
+    setLoading(true);
 
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredentials) => {
         const user = userCredentials.user;
-
         const userType = email === "admin@example.com" ? "Admin" : "User";
 
         localStorage.setItem("loggedIn", true);
         localStorage.setItem("userType", userType);
 
+        setLoading(false);
         if (userType === "Admin") {
           window.location.href = "/admin-dashboard";
         } else {
@@ -26,6 +28,7 @@ const Login = () => {
         }
       })
       .catch((error) => {
+        setLoading(false);
         console.error("Error logging in:", error.message);
         alert("Invalid login credentials. Please try again.");
       });
@@ -68,6 +71,11 @@ const Login = () => {
           Don't have an account? <a href="/register">Register</a>
         </div>
       </div>
+      {loading && (
+        <div className="loaderCont">
+          <div className="loader"></div>
+        </div>
+      )}
     </div>
   );
 };

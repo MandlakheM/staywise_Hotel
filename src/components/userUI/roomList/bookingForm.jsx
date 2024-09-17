@@ -26,12 +26,13 @@ function BookingForm({ roomId, roomPrice, roomBreakfastFee, roomDetails }) {
   const auth = getAuth();
   const user = auth.currentUser;
 
-  const pricePerNight = roomPrice;
+  const pricePerNight = Number(roomPrice);
   const nights = Math.ceil(
     (new Date(checkoutDate) - new Date(checkinDate)) / (1000 * 60 * 60 * 24)
   );
-  const breakfastFee = roomBreakfastFee;
-  const totalBeforeTaxes = pricePerNight * (nights + breakfastFee); //this needs to be fixed!!
+  const breakfastFee = Number(roomBreakfastFee);
+  const stayPrice = pricePerNight * nights;
+  const totalBeforeTaxes = stayPrice + breakfastFee;
   // console.log(totalBeforeTaxes);
   const handleInputChange = (e) => {
     setUserDetails({
@@ -72,7 +73,7 @@ function BookingForm({ roomId, roomPrice, roomBreakfastFee, roomDetails }) {
           checkinDate,
           checkoutDate,
           totalAmount: totalBeforeTaxes,
-          token, 
+          token,
           timestamp: new Date(),
           ...roomDetails,
         };

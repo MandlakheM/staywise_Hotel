@@ -1,5 +1,5 @@
 .accommodations {
-  background-color: blueviolet;
+  /* background-color: blueviolet; */
   height: auto;
   
 }
@@ -8,4 +8,8 @@
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
+}
+
+.cardActions{
+  
 }

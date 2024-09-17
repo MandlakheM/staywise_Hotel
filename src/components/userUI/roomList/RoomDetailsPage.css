@@ -80,7 +80,7 @@
   justify-content: space-between;
 }
 
-.fav button:hover{
+.fav button:hover {
   background-color: var(--primary-color-dark);
 }
 
@@ -97,7 +97,31 @@
   transform: scale(1.01);
 }
 
-.buttContainer{
+.buttContainer {
   display: flex;
   gap: 1rem;
+}
+
+.loaderCont {
+  display: grid;
+  place-content: center;
+  position: absolute;
+  z-index: 2;
+  height: 100vh;
+  width: 100vw;
+}
+
+.loader {
+  /* HTML: <div class="loader"></div> */
+  width: 50px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 8px solid;
+  border-color: #000 #0000;
+  animation: l1 1s infinite;
+}
+@keyframes l1 {
+  to {
+    transform: rotate(0.5turn);
+  }
 }
