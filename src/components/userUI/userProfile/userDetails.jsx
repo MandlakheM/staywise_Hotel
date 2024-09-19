@@ -15,6 +15,7 @@ import { fetchBookings } from "../../../Redux/booking/bookingSlice";
 import { useDispatch, useSelector } from "react-redux";
 import FavoriteRooms from "./favourite";
 import RateModal from "./rateModal";
+import { span } from "framer-motion/client";
 
 function UserProfile() {
   const [userData, setUserData] = useState({
@@ -183,6 +184,14 @@ function UserProfile() {
                   <p>{booking.roomTitle || "Room Title"}</p>
                   <p>Check-in: {booking.checkinDate}</p>
                   <p>Checkout: {booking.checkoutDate}</p>
+                  <p>
+                    Booking status:{" "}
+                    {booking.status ? (
+                      <span id="confirmed">Confirmed</span>
+                    ) : (
+                      <span id="pending">pending</span>
+                    )}
+                  </p>
                   <button
                     type="button"
                     className="logout"
@@ -208,12 +217,12 @@ function UserProfile() {
         />
       )}
 
-      <div className="notifications">
+      {/* <div className="notifications">
         <h3>Notifications</h3>
         <div className="notifications-placeholder">
           [Placeholder for notifications]
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }

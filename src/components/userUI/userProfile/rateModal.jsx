@@ -11,7 +11,6 @@ function RateModal({ handleModal, roomId, userId }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     // if (stars && comment) {
     //   try {
     //     const roomRef = doc(db, "accommodationList", roomId);

@@ -118,3 +118,11 @@ button:hover {
   display: flex;
   gap: 3rem;
 }
+
+#confirmed{
+  color: green;
+}
+
+#pending{
+  color: orange;
+}

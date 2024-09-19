@@ -1,18 +1,20 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { getAuth } from "firebase/auth";
-import { addDoc, collection } from "firebase/firestore";
+import { addDoc, collection, doc, getDoc } from "firebase/firestore";
 import { db } from "../../../config/firebase";
 import "./BookingForm.css";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { makeBooking } from "../../../Redux/booking/bookingSlice";
 import StripeCheckout from "react-stripe-checkout";
+import axios from "axios";
 
 function BookingForm({ roomId, roomPrice, roomBreakfastFee, roomDetails }) {
   const [guests, setGuests] = useState(1);
   const [continueBooking, setContinueBooking] = useState(false);
   const [checkinDate, setCheckinDate] = useState("");
   const [checkoutDate, setCheckoutDate] = useState("");
+  const [userData, setUserData] = useState(null);
   const [userDetails, setUserDetails] = useState({
     name: "",
     address: "",
@@ -21,11 +23,11 @@ function BookingForm({ roomId, roomPrice, roomBreakfastFee, roomDetails }) {
     expirationDate: "",
     cvv: "",
   });
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const auth = getAuth();
   const user = auth.currentUser;
-
   const pricePerNight = Number(roomPrice);
   const nights = Math.ceil(
     (new Date(checkoutDate) - new Date(checkinDate)) / (1000 * 60 * 60 * 24)
@@ -40,6 +42,22 @@ function BookingForm({ roomId, roomPrice, roomBreakfastFee, roomDetails }) {
       [e.target.name]: e.target.value,
     });
   };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (user) {
+        const userDocRef = doc(db, "users", user.uid);
+        const userDocSnap = await getDoc(userDocRef);
+        if (userDocSnap.exists()) {
+          setUserData(userDocSnap.data());
+        } else {
+          console.error("User document not found.");
+        }
+      }
+    };
+
+    fetchData();
+  }, [user]);
 
   // const reserve = () => {
   //   if (user && roomId) {
@@ -85,6 +103,22 @@ function BookingForm({ roomId, roomPrice, roomBreakfastFee, roomDetails }) {
 
         alert("Booking and payment successful!");
         setContinueBooking(false);
+        if (userData && userData.email) {
+          try {
+            await axios.post("http://localhost:3030/api/send", {
+              from: "mangumtamandilakhe7@gmail.com",
+              to: userData.email,
+              subject: "Booking Confirmation",
+              message: `Dear ${userData.fullName}, your booking for ${roomDetails.roomTitle} has been made and is awaiting approval.`,
+            });
+
+            alert("Confirmation email sent!");
+          } catch (err) {
+            alert("Error sending email: " + err.message);
+          }
+        } else {
+          alert("User email not found.");
+        }
         navigate("/userDetails");
       } else {
         alert("You must be logged in to make a booking.");
@@ -173,7 +207,7 @@ function BookingForm({ roomId, roomPrice, roomBreakfastFee, roomDetails }) {
             /> */}
             <StripeCheckout
               token={onToken}
-              stripeKey="pk_test_51PvyjyEfeDWghDPt7VoSfmQMd8KyIBfZLxW6FSI3aaH974SQGLN3CL4MOdZ5YhFyiYR9WU9weKc3A0rh9s9skIYf00b8hDIMOe"
+              stripeKey={process.env.STRIPE_API}
             />
             {/* <button className="payment-button" onClick={reserve}>
               Make Payment
