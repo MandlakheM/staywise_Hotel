@@ -27,6 +27,7 @@ function SignUp() {
   const [secretKey, setSecretKey] = useState("");
   const [file, setFile] = useState("");
   const [per, setPerc] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const uploadFile = () => {
@@ -78,6 +79,7 @@ function SignUp() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
     if (userType === "Admin" && secretKey !== "@dmin") {
       alert("Invalid Admin Secret Key");
@@ -96,6 +98,7 @@ function SignUp() {
       });
       // navigate(-1);
       window.location.href = "/login";
+      setLoading(false);
     } catch (error) {
       alert("Registration failed. Please try again.");
     }
@@ -209,6 +212,11 @@ function SignUp() {
           Have an account? <a href="/login">Log in</a>
         </div>
       </div>
+      {loading && (
+        <div className="loaderCont">
+          <div className="loader"></div>
+        </div>
+      )}
     </div>
   );
 }

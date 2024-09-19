@@ -14,56 +14,63 @@ function About() {
   const [maxPrice, setMaxPrice] = useState("");
   const [bedCount, setBedCount] = useState("");
   const [bathroomCount, setBathroomCount] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
 
-    const fetchData = async () => {
-      try {
-        const colRef = collection(db, "accommodationList");
-  
-        let conditions = [];
-  
-        if (minPrice) {
-          conditions.push(where("roomPrice", ">=", Number(minPrice)));
-        }
-        if (maxPrice) {
-          conditions.push(where("roomPrice", "<=", Number(maxPrice)));
-        }
-        if (bedCount) {
-          conditions.push(where("bedCount", "==", Number(bedCount)));
-        }
-        if (bathroomCount) {
-          conditions.push(where("bathroomCount", "==", Number(bathroomCount)));
-        }
-  
-        const roomQuery = conditions.length
-          ? query(colRef, ...conditions)
-          : colRef;
-  
-        const snapshot = await getDocs(roomQuery);
-        const accommodationList = snapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
-        setAccommodations(accommodationList);
-      } catch (error) {
-        console.error("Error fetching documents:", error);
+  const fetchData = async () => {
+    setIsLoading(true);
+    try {
+      const colRef = collection(db, "accommodationList");
+
+      let conditions = [];
+
+      if (minPrice) {
+        conditions.push(where("roomPrice", ">=", Number(minPrice)));
       }
-    };
+      if (maxPrice) {
+        conditions.push(where("roomPrice", "<=", Number(maxPrice)));
+      }
+      if (bedCount) {
+        conditions.push(where("bedCount", "==", Number(bedCount)));
+      }
+      if (bathroomCount) {
+        conditions.push(where("bathroomCount", "==", Number(bathroomCount)));
+      }
 
-    if (!accommodations) {
-      return (
-        <div className="loaderCont">
-          <div className="loader"></div>
-        </div>
-      );
+      console.log("Query conditions:", conditions);
+
+      const roomQuery = conditions.length
+        ? query(colRef, ...conditions)
+        : colRef;
+
+      const snapshot = await getDocs(roomQuery);
+      const accommodationList = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      console.log("Fetched accommodations:", accommodationList);
+      setAccommodations(accommodationList);
+    } catch (error) {
+      console.error("Error fetching documents:", error);
+    } finally {
+      setIsLoading(false);
     }
-
-  const handleSearch = () => {
-    fetchData();
   };
 
   useEffect(() => {
     fetchData();
   }, []);
+
+  const handleSearch = () => {
+    fetchData();
+  };
+
+  if (isLoading) {
+    return (
+      <div className="loaderCont">
+        <div className="loader"></div>
+      </div>
+    );
+  }
 
   return (
     <>
@@ -71,10 +78,6 @@ function About() {
         <div className="listContainer">
           <div className="list">
             <div className="sticky">
-              <div className="searchHeading">
-                <p>Search for your ideal room by :</p>
-              </div>
-
               <div className="filters">
                 <div className="minprice">
                   <label htmlFor="minPrice">Min price</label>
@@ -117,22 +120,16 @@ function About() {
                 </div>
               </div>
             </div>
-
-            {accommodations.length === 0 ? (
-                <div className="loaderCont">
-                <div className="loader"></div>
-              </div>
-            ) : (
-              accommodations.map((room) => (
-                <RoomDisplay key={room.id} room={room} />
-              ))
-            )}
-            {/* <RoomDisplay /> */}
+            <div className="accomList">
+              {accommodations.length === 0 ? (
+                <p>No accommodations found matching your criteria.</p>
+              ) : (
+                accommodations.map((room) => (
+                  <RoomDisplay key={room.id} room={room} />
+                ))
+              )}
+            </div>
           </div>
-
-          {/* <div className="mapContainer">
-          <Map />
-        </div> */}
         </div>
       </div>
       <Footer />

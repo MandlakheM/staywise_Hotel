@@ -1,11 +1,16 @@
 import React from "react";
 import "./Footer.css";
+import Map from "../roomList/map";
+
 
 const Footer = () => {
   return (
     <footer className="footer">
       <div className="footer-section logo">
         <div className="logo">STAYWISE</div>
+           <div className="mapContainer">
+          <Map />
+        </div>
       </div>
       <div className="footer-section about">
         <h4>About Us</h4>

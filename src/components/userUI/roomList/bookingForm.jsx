@@ -9,7 +9,13 @@ import { makeBooking } from "../../../Redux/booking/bookingSlice";
 import StripeCheckout from "react-stripe-checkout";
 import axios from "axios";
 
-function BookingForm({ roomId, roomPrice, roomBreakfastFee, roomDetails }) {
+function BookingForm({
+  roomId,
+  roomPrice,
+  roomBreakfastFee,
+  roomDetails,
+  activateLoader,
+}) {
   const [guests, setGuests] = useState(1);
   const [continueBooking, setContinueBooking] = useState(false);
   const [checkinDate, setCheckinDate] = useState("");
@@ -83,6 +89,7 @@ function BookingForm({ roomId, roomPrice, roomBreakfastFee, roomDetails }) {
 
   const onToken = async (token) => {
     try {
+      activateLoader();
       if (user && roomId) {
         const bookingData = {
           userId: user.uid,
@@ -100,11 +107,13 @@ function BookingForm({ roomId, roomPrice, roomBreakfastFee, roomDetails }) {
         await addDoc(bookingsCollectionRef, bookingData);
 
         dispatch(makeBooking(bookingData));
+        activateLoader();
 
         alert("Booking and payment successful!");
         setContinueBooking(false);
         if (userData && userData.email) {
           try {
+            activateLoader();
             await axios.post("http://localhost:3030/api/send", {
               from: "mangumtamandilakhe7@gmail.com",
               to: userData.email,
@@ -113,6 +122,7 @@ function BookingForm({ roomId, roomPrice, roomBreakfastFee, roomDetails }) {
             });
 
             alert("Confirmation email sent!");
+            activateLoader();
           } catch (err) {
             alert("Error sending email: " + err.message);
           }
@@ -130,64 +140,68 @@ function BookingForm({ roomId, roomPrice, roomBreakfastFee, roomDetails }) {
   };
 
   return (
-    <div className="booking-container">
-      <h2>
-        R{pricePerNight} <span>per night</span>
-      </h2>
+    <>
+      <div className="booking-container">
+        <h2>
+          R{pricePerNight} <span>per night</span>
+        </h2>
 
-      <div className="date-section">
-        <div className="date-box">
-          <label>Check-in</label>
-          <input type="date" onChange={(e) => setCheckinDate(e.target.value)} />
+        <div className="date-section">
+          <div className="date-box">
+            <label>Check-in</label>
+            <input
+              type="date"
+              onChange={(e) => setCheckinDate(e.target.value)}
+            />
+          </div>
+          <div className="date-box">
+            <label>Checkout</label>
+            <input
+              type="date"
+              onChange={(e) => setCheckoutDate(e.target.value)}
+            />
+          </div>
         </div>
-        <div className="date-box">
-          <label>Checkout</label>
-          <input
-            type="date"
-            onChange={(e) => setCheckoutDate(e.target.value)}
-          />
+
+        <div className="guests-section">
+          <label>Guests</label>
+          <select value={guests} onChange={(e) => setGuests(e.target.value)}>
+            <option value={1}>1 guest</option>
+            <option value={2}>2 guests</option>
+            <option value={3}>3 guests</option>
+            <option value={4}>4 guests</option>
+          </select>
         </div>
-      </div>
 
-      <div className="guests-section">
-        <label>Guests</label>
-        <select value={guests} onChange={(e) => setGuests(e.target.value)}>
-          <option value={1}>1 guest</option>
-          <option value={2}>2 guests</option>
-          <option value={3}>3 guests</option>
-          <option value={4}>4 guests</option>
-        </select>
-      </div>
+        <button
+          className="reserve-button"
+          onClick={() => setContinueBooking(!continueBooking)}
+        >
+          Reserve
+        </button>
 
-      <button
-        className="reserve-button"
-        onClick={() => setContinueBooking(!continueBooking)}
-      >
-        Reserve
-      </button>
-
-      {continueBooking && (
-        <>
-          <div className="payment-form">
-            <input
-              type="text"
-              name="name"
-              placeholder="Name"
-              onChange={handleInputChange}
-            />
-            <input
-              type="text"
-              name="address"
-              placeholder="Address"
-              onChange={handleInputChange}
-            />
-            <input
-              type="text"
-              name="postalCode"
-              placeholder="Postal Code"
-              onChange={handleInputChange}
-            />
-            {/* <input
+        {continueBooking && (
+          <>
+            <div className="payment-form">
+              <input
+                type="text"
+                name="name"
+                placeholder="Name"
+                onChange={handleInputChange}
+              />
+              <input
+                type="text"
+                name="address"
+                placeholder="Address"
+                onChange={handleInputChange}
+              />
+              <input
+                type="text"
+                name="postalCode"
+                placeholder="Postal Code"
+                onChange={handleInputChange}
+              />
+              {/* <input
               type="text"
               name="cardNumber"
               placeholder="Card Number"
@@ -205,33 +219,39 @@ function BookingForm({ roomId, roomPrice, roomBreakfastFee, roomDetails }) {
               placeholder="CVV"
               onChange={handleInputChange}
             /> */}
-            <StripeCheckout
-              token={onToken}
-              stripeKey={process.env.STRIPE_API}
-            />
-            {/* <button className="payment-button" onClick={reserve}>
+              <StripeCheckout
+                token={onToken}
+                stripeKey="pk_test_51PvyjyEfeDWghDPt7VoSfmQMd8KyIBfZLxW6FSI3aaH974SQGLN3CL4MOdZ5YhFyiYR9WU9weKc3A0rh9s9skIYf00b8hDIMOe"
+              />
+              {/* <button className="payment-button" onClick={reserve}>
               Make Payment
             </button> */}
-          </div>
-        </>
-      )}
+            </div>
+          </>
+        )}
 
-      <p>You won't be charged yet</p>
+        <p>You won't be charged yet</p>
 
-      <div className="price-breakdown">
-        <p>
-          R{pricePerNight} x {nights} nights
-          <span>R{pricePerNight * nights}</span>
-        </p>
-        <p>
-          Breakfast fee<span>R{breakfastFee || "0"}</span>
-        </p>
-        <hr />
-        <p>
-          Total<span>R{totalBeforeTaxes}</span>
-        </p>
+        <div className="price-breakdown">
+          <p>
+            R{pricePerNight} x {nights} nights
+            <span>R{pricePerNight * nights}</span>
+          </p>
+          <p>
+            Breakfast fee<span>R{breakfastFee || "0"}</span>
+          </p>
+          <hr />
+          <p>
+            Total<span>R{totalBeforeTaxes}</span>
+          </p>
+        </div>
+        {/* {loading && (
+        <div className="loaderCont">
+          <div className="loader"></div>
+        </div>
+      )} */}
       </div>
-    </div>
+    </>
   );
 }
 

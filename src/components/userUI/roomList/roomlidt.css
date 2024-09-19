@@ -54,7 +54,7 @@
 .maxprice input,
 .bedCount input,
 .bathroomCount input {
-  height: 2.5rem;
+  height: 1.5rem;
   width: 5rem;
 }
 
@@ -71,7 +71,7 @@
   height: 2.5rem;
   width: 5rem;
   /* align-self: flex-end; */
-  background-color: var( --primary-color);
+  background-color: var(--primary-color);
 }
 
 .img {
@@ -80,6 +80,16 @@
   width: 700px;
   background-size: cover;
   background-repeat: no-repeat;
+}
+
+.accomList {
+  height: 100vh;
+  width: 100%;
+  /* overflow: scroll; */
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  padding-left: 10%;
 }
 
 .roomCard {
@@ -124,5 +134,5 @@
 }
 
 .leaflet-container {
-  height: 90vh;
+  height: 50vh;
 }

@@ -22,6 +22,7 @@ import ShareIcon from "@mui/icons-material/Share";
 function IndividualRoom() {
   const { roomId } = useParams();
   const [roomDetails, setRoomDetails] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchRoomDetails = async () => {
@@ -63,7 +64,8 @@ function IndividualRoom() {
 
       try {
         await setDoc(doc(db, "favorites", `${user.uid}_${roomId}`), favourite);
-        console.log("Room added to favorites:", favourite);
+        // console.log("Room added to favorites:", favourite);
+        alert("Room added to your favourite");
       } catch (error) {
         console.error("Error adding to favorites:", error);
       }
@@ -89,6 +91,10 @@ function IndividualRoom() {
         alert("Room link copied to clipboard!");
       });
     }
+  };
+
+  const activateLoader = () => {
+    setLoading(!loading);
   };
 
   return (
@@ -191,10 +197,16 @@ function IndividualRoom() {
             roomPrice={roomDetails.roomPrice}
             roomBreakfastFee={roomDetails.breakfastPrice}
             roomDetails={roomDetails}
+            activateLoader={activateLoader}
           />
         </div>
       </div>
       <Footer />
+      {loading && (
+        <div className="loaderCont">
+          <div className="loader"></div>
+        </div>
+      )}
     </>
   );
 }
