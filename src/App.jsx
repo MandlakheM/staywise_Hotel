@@ -11,7 +11,7 @@ import SignUp from "./components/auth/signup";
 import UserDetails from "./components/userUI/userProfile/userDetails";
 import Navbar from "./components/userUI/header/navBar";
 import AdminHome from "./components/admin/adminHome/adminHome";
-import Booking from "./components/userUI/rooms/booking";
+import Gallery from "./components/userUI/rooms/gallery";
 import About from "./components/userUI/roomList/about";
 import Home from "./components/userUI/home/home";
 import ProtectedRoute from "./components/router/protectedRoute";
@@ -49,16 +49,17 @@ function App() {
               <>
                 <Route path="/" element={<Navigate to="/admin-dashboard" />} />
                 <Route path="/userDetails" element={<Navigate to="/" />} />
-                <Route path="/booking" element={<Navigate to="/" />} />
+                {/* <Route path="/booking" element={<Navigate to="/" />} /> */}
                 <Route path="/admin-dashboard" element={<AdminHome />} />
               </>
             )}
           </Route>
-          
+
           <Route path="/room/:roomId" element={<IndividualRoom />} />
           <Route path="/about" element={<About />} />
           <Route path="/home" element={<Home />} />
           <Route path="*" element={<Navigate to="/" />} />
+          <Route path="/gallery" element={<Gallery />} />
         </Routes>
       </div>
     </Router>

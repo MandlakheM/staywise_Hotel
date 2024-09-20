@@ -19,7 +19,7 @@ function Home() {
   return (
     <>
       <section className="body">
-        <div className="home gutter">
+        <div className="home ">
           <div className="homeContent">
             <h1>Enjoy Your Dream Vacation</h1>
             <p>Experience luxury at Staywise, your ultimate destination.</p>

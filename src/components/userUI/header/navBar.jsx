@@ -14,7 +14,7 @@ function Navbar({ isLoggedIn, userType }) {
           <Link to="/about">Explore rooms</Link>
         </li>
         <li>
-          {/* <a href="#amenitiesContainer">Amenities</a> */}
+          <Link to="/gallery">Gallery</Link>
         </li>
       </ul>
       {isLoggedIn && userType == "Admin" ? (
@@ -27,9 +27,7 @@ function Navbar({ isLoggedIn, userType }) {
         isLoggedIn && (
           <div className="details">
             <ul>
-              <li>
-                {/* <Link to="/booking">Booking</Link> */}
-              </li>
+              <li>{/* <Link to="/booking">Booking</Link> */}</li>
               <li>
                 <Link to="/userDetails">User Details</Link>
               </li>

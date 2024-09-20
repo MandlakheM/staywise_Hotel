@@ -105,7 +105,6 @@ function BookingForm({
 
         const bookingsCollectionRef = collection(db, "bookings");
         await addDoc(bookingsCollectionRef, bookingData);
-
         dispatch(makeBooking(bookingData));
         activateLoader();
 
@@ -118,7 +117,7 @@ function BookingForm({
               from: "mangumtamandilakhe7@gmail.com",
               to: userData.email,
               subject: "Booking Confirmation",
-              message: `Dear ${userData.fullName}, your booking for ${roomDetails.roomTitle} has been made and is awaiting approval.`,
+              message: `Dear customer, your booking for ${roomDetails.roomTitle} has been made and is awaiting approval.`,
             });
 
             alert("Confirmation email sent!");
@@ -132,10 +131,10 @@ function BookingForm({
         navigate("/userDetails");
       } else {
         alert("You must be logged in to make a booking.");
+        navigate("/");
       }
     } catch (error) {
-      console.error("Error processing booking:", error);
-      alert("There was an error processing your booking.");
+      alert("Error processing booking:", error);
     }
   };
 
