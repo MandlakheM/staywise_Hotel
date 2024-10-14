@@ -17,6 +17,7 @@ ul {
   gap: 2rem;
   justify-content: center;
   list-style: none;
+  
 }
 
 li {
@@ -45,9 +46,58 @@ li:hover {
 }
 
 .authActions {
-  background-color: var(--);
+  background-color: var(--primary-color);
   border-radius: 10px;
   color: var(--white);
+}
+
+
+
+.hamburger {
+  display: none;
+  cursor: pointer;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 24px;
+}
+
+.hamburger .bar {
+  width: 30px;
+  height: 3px;
+  background-color: white;
+  margin: 3px 0;
+}
+
+@media (max-width: 768px) {
+  .hamburger {
+    display: flex;
+  }
+
+  .navbar ul {
+    position: absolute;
+    top: 50px;
+    right: 0;
+    background-color: #007bff;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    display: none;
+  }
+
+  .navbar ul.open {
+    display: flex;
+  }
+
+  .navbar ul li {
+    width: 100%;
+    text-align: left;
+    padding: 10px 20px;
+  }
+
+  .navbar ul li a {
+    padding: 10px 20px;
+    width: 100%;
+  }
 }
 
 @media (max-width: 425px) {

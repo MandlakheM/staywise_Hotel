@@ -24,8 +24,8 @@ function Home() {
             <h1>Enjoy Your Dream Vacation</h1>
             <p>Experience luxury at Staywise, your ultimate destination.</p>
           </div>
-          <div class="bookingContainer">
-            <button class="btn" onClick={()=>navigate("/about")}>
+          <div className="bookingContainer">
+            <button className="btn" onClick={()=>navigate("/about")}>
               {/* <SearchIcon /> */} 
               Explore our rooms
             </button>

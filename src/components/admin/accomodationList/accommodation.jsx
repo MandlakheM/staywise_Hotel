@@ -56,7 +56,7 @@ function Accommodation() {
 
   return (
     <main>
-      <div className="accommodations">
+      <div className="accommodations gutter">
         <button type="button" onClick={activateModal}>
           Add Room
         </button>
@@ -66,14 +66,14 @@ function Accommodation() {
             currentAccommodation={selectedAccommodation}
           />
         )}
-        <div>
+        <div className="">
           <h1>Accommodation List</h1>
           <div className="accommodationCards">
             {accommodations.length > 0 ? (
               accommodations.map((accommodation) => (
                 <div key={accommodation.id}>
                   <Card
-                    sx={{ width: 300, marginBottom: "20px"}}
+                    sx={{ width: 300, marginBottom: "20px", height: 400}}
                     key={accommodation.id}
                   >
                     <CardMedia
