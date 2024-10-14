@@ -11,7 +11,7 @@ function Navbar({ isLoggedIn, userType }) {
           <Link to="/home">Home</Link>
         </li>
         <li>
-          <Link to="/about">Explore rooms</Link>
+          <Link to="/about">Rooms</Link>
         </li>
         <li>
           <Link to="/gallery">Gallery</Link>
@@ -38,12 +38,12 @@ function Navbar({ isLoggedIn, userType }) {
       {!isLoggedIn && (
         <div className="auth">
           <ul>
-            <li>
+            <button className="authActions">
               <Link to="/login">Login</Link>
-            </li>
-            <li>
+            </button>
+            <button className="authActions">
               <Link to="/register">Register</Link>
-            </li>
+            </button>
           </ul>
         </div>
       )}

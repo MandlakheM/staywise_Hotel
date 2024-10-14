@@ -72,9 +72,9 @@ function UserProfile() {
     try {
       const userDocRef = doc(db, "users", user.uid);
       await updateDoc(userDocRef, userData);
-      console.log("User profile updated successfully!");
+      alert("User profile updated successfully!");
     } catch (error) {
-      console.error("Error updating profile:", error);
+      alert("Error updating profile:", error);
     }
   };
 
@@ -192,14 +192,18 @@ function UserProfile() {
                       <span id="pending">pending</span>
                     )}
                   </p>
-                  <button
-                    type="button"
-                    className="logout"
-                    onClick={() => handleModal(booking.id, user.uid)}
-                    // userId={user.uid}
-                  >
-                    Rate room
-                  </button>
+                  {booking.status ? (
+                    <button
+                      type="button"
+                      className="logout"
+                      onClick={() => handleModal(booking.id, user.uid)}
+                      // userId={user.uid}
+                    >
+                      Rate room
+                    </button>
+                  ) : (
+                    ""
+                  )}
                 </div>
               ))
             ) : (

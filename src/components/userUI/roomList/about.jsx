@@ -10,10 +10,10 @@ import { p } from "framer-motion/client";
 
 function About() {
   const [accommodations, setAccommodations] = useState([]);
-  const [minPrice, setMinPrice] = useState("");
-  const [maxPrice, setMaxPrice] = useState("");
-  const [bedCount, setBedCount] = useState("");
-  const [bathroomCount, setBathroomCount] = useState("");
+  const [minPrice, setMinPrice] = useState(null);
+  const [maxPrice, setMaxPrice] = useState(null);
+  const [bedCount, setBedCount] = useState(null);
+  const [bathroomCount, setBathroomCount] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
   const fetchData = async () => {
@@ -24,16 +24,16 @@ function About() {
       let conditions = [];
 
       if (minPrice) {
-        conditions.push(where("roomPrice", ">=", Number(minPrice)));
+        conditions.push(where("roomPrice", ">=", minPrice));
       }
       if (maxPrice) {
-        conditions.push(where("roomPrice", "<=", Number(maxPrice)));
+        conditions.push(where("roomPrice", "<=", maxPrice));
       }
       if (bedCount) {
-        conditions.push(where("bedCount", "==", Number(bedCount)));
+        conditions.push(where("bedCount", "==", bedCount));
       }
       if (bathroomCount) {
-        conditions.push(where("bathroomCount", "==", Number(bathroomCount)));
+        conditions.push(where("bathroomCount", "==", bathroomCount));
       }
 
       console.log("Query conditions:", conditions);

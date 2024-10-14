@@ -25,31 +25,9 @@ function Home() {
             <p>Experience luxury at Staywise, your ultimate destination.</p>
           </div>
           <div class="bookingContainer">
-            <form>
-              <div class="formGroup">
-                <div class="inputGroup">
-                  <input type="date" />
-                  {/* <label>Check In</label> */}
-                </div>
-                <p>Add date</p>
-              </div>
-              <div class="formGroup">
-                <div class="inputGroup">
-                  <input type="date" />
-                  {/* <label>Check Out</label> */}
-                </div>
-                <p>Add date</p>
-              </div>
-              <div class="formGroup">
-                <div class="inputGroup">
-                  <input type="number" min={1} name="guestNumber" />
-                  <label htmlFor="guestNumber">Guests</label>
-                </div>
-                <p>Add guests</p>
-              </div>
-            </form>
             <button class="btn" onClick={()=>navigate("/about")}>
-              <SearchIcon />
+              {/* <SearchIcon /> */} 
+              Explore our rooms
             </button>
           </div>
         </div>

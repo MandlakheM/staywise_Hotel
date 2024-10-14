@@ -1,6 +1,7 @@
 .offeringCard {
   width: 90%;
-  min-height: 420px;
+  height: 450px;
+  overflow: hidden;
   text-align: start;
   box-shadow: 0 5px 25px 0.1rem rgba(0, 0, 0.1);
   border-radius: 7px;

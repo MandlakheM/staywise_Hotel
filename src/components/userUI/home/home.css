@@ -43,9 +43,9 @@
   color: var(--extra-light);
 }
 
-.bookingContainer {
+/* .bookingContainer {
   position: absolute;
-  bottom: -5rem;
+  bottom: -2rem;
   left: 50%;
   z-index: 1;
   transform: translateX(-50%);
@@ -55,11 +55,11 @@
   gap: 1rem;
   padding: 3rem 2rem;
   border-radius: 2rem;
-  /* background-color: rgba(255, 255, 255, 0.7); */
+  background-color: rgba(255, 255, 255, 0.7);
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
   box-shadow: 5px 5px 30px rgba(0, 0, 0, 0.1);
-}
+} */
 
 .bookingContainer form {
   width: 100%;
@@ -116,14 +116,16 @@
   font-size: 1.5rem;
   color: var(--white);
   background-color: var(--primary-color);
-  border-radius: 100%;
+  /* border-radius: 100%; */
   cursor: pointer;
   transition: 0.3s;
 }
 
-.btn{
+.btn {
   display: flex;
   align-items: center;
+  margin: 1rem 2rem;
+  border-radius: 10px;
 }
 
 .bookingContainer .btn:hover {
@@ -190,11 +192,12 @@
 .cardContainer {
   margin-top: 3rem;
   display: flex;
+  /* flex-wrap: wrap; */
   justify-content: space-between;
   padding-bottom: 80px;
 }
 
-.happyGuests{
+.happyGuests {
   /* margin-top: 2rem; */
   min-height: 350px;
 }
@@ -219,7 +222,7 @@
   align-items: center;
 }
 
-.ratingsContainer{
+.ratingsContainer {
   display: flex;
   gap: 2rem;
   justify-content: space-between;
@@ -227,10 +230,17 @@
   margin-top: 3rem;
 }
 
-.ratings{
+.ratings {
   width: 500px;
 }
 
 .comment p {
   font-weight: bold;
+}
+
+@media (max-width: 768px) {
+  .homeHeading {
+    font-size: 1.5rem;
+    line-height: 2rem;
+  }
 }

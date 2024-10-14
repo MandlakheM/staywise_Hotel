@@ -42,3 +42,24 @@ li:hover {
   align-items: center;
   justify-content: flex-end;
 }
+
+.authActions {
+  background-color: var(--);
+  border-radius: 10px;
+  color: var(--white);
+}
+
+@media (max-width: 425px) {
+  .logo {
+    font-size: 1rem;
+  }
+
+  ul {
+    gap: 1rem;
+    margin-left: 10px;
+  }
+
+  li {
+    font-size: 0.9rem;
+  }
+}

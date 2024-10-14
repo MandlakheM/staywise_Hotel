@@ -21,6 +21,8 @@ function BookingForm({
   const [checkinDate, setCheckinDate] = useState("");
   const [checkoutDate, setCheckoutDate] = useState("");
   const [userData, setUserData] = useState(null);
+  const [loading, setLoading] = useState(false);
+
   const [userDetails, setUserDetails] = useState({
     name: "",
     address: "",
@@ -57,7 +59,7 @@ function BookingForm({
         if (userDocSnap.exists()) {
           setUserData(userDocSnap.data());
         } else {
-          console.error("User document not found.");
+          alert("User document not found.");
         }
       }
     };
@@ -89,7 +91,16 @@ function BookingForm({
 
   const onToken = async (token) => {
     try {
+      // if (loading) return;
+
+      if (!user) {
+        alert("You must be logged in to make a booking.");
+        navigate("/");
+        return;
+      }
+
       activateLoader();
+
       if (user && roomId) {
         const bookingData = {
           userId: user.uid,
@@ -104,15 +115,16 @@ function BookingForm({
         };
 
         const bookingsCollectionRef = collection(db, "bookings");
-        await addDoc(bookingsCollectionRef, bookingData);
+
+        // await addDoc(bookingsCollectionRef, bookingData);
+
         dispatch(makeBooking(bookingData));
-        activateLoader();
 
         alert("Booking and payment successful!");
         setContinueBooking(false);
+
         if (userData && userData.email) {
           try {
-            activateLoader();
             await axios.post("http://localhost:3030/api/send", {
               from: "mangumtamandilakhe7@gmail.com",
               to: userData.email,
@@ -121,20 +133,22 @@ function BookingForm({
             });
 
             alert("Confirmation email sent!");
-            activateLoader();
           } catch (err) {
             alert("Error sending email: " + err.message);
           }
         } else {
           alert("User email not found.");
         }
+
         navigate("/userDetails");
       } else {
-        alert("You must be logged in to make a booking.");
-        navigate("/");
+        alert("Room not found.");
       }
     } catch (error) {
-      alert("Error processing booking:", error);
+      console.error("Error processing booking:", error);
+      alert("There was an error processing your booking.");
+    } finally {
+      activateLoader();
     }
   };
 
