@@ -97,9 +97,6 @@ function UserProfile() {
 
   return (
     <div className="profile-wrapper gutter">
-      <button className="logout" onClick={logOut}>
-        Log Out
-      </button>
       <div className="profile-container">
         <div className="loginContainer">
           <div className="loginBox">
@@ -148,6 +145,9 @@ function UserProfile() {
               <button className="loginBtn" type="submit">
                 Edit Profile
               </button>
+              <button className="logout" onClick={logOut}>
+                Log Out
+              </button>
             </form>
           </div>
         </div>
@@ -163,7 +163,7 @@ function UserProfile() {
                     src={favRoom.img || "https://via.placeholder.com/150"}
                     alt={`Favorite Room ${index + 1}`}
                   />
-                  <p>{favRoom.roomTitle || "Room Title"}</p>
+                  <h5>{favRoom.roomTitle || "Room Title"}</h5>
                 </div>
               ))
             ) : (
@@ -181,7 +181,7 @@ function UserProfile() {
                     src={booking.img || "https://via.placeholder.com/150"}
                     alt={`Booking`}
                   />
-                  <p>{booking.roomTitle || "Room Title"}</p>
+                  <h5>{booking.roomTitle || "Room Title"}</h5>
                   <p>Check-in: {booking.checkinDate}</p>
                   <p>Checkout: {booking.checkoutDate}</p>
                   <p>

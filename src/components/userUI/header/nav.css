@@ -1,14 +1,15 @@
 .nav {
-  max-width: var(--max-width);
+  /* max-width: var(--max-width); */
+  width: 100vw;
   height: 80px;
   margin: auto;
-  padding: 1.5rem 1rem;
+  /* padding: 1.5rem 1rem; */
   text-align: center;
   display: flex;
   align-items: center;
   justify-content: space-between;
   background-color: var(--white);
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 
 ul {

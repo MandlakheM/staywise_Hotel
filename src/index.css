@@ -30,6 +30,16 @@ a {
 }
 
 :root {
+  --primary-color: #ad7816;
+  --primary-color-dark: #644604;
+  --text-dark: #1c1403;
+  --text-light: #767268;
+  --extra-light: #edc579;
+  --white: #f9edd7;
+  --max-width: 1200px;
+}
+
+/* :root {
   --primary-color: #2c3855;
   --primary-color-dark: #435681;
   --text-dark: #333333;
@@ -37,5 +47,4 @@ a {
   --extra-light: #f3f4f6;
   --white: #ffffff;
   --max-width: 1200px;
-}
-
+} */

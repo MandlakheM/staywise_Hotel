@@ -1,15 +1,16 @@
 .profile-wrapper {
-  display: flex;
+  display: grid;
+  place-items: center;
 }
 .profile-container {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  width: 70%;
+  width: 100%;
 }
 
 .profile-section {
-  width: 70%;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -66,7 +67,10 @@ button:hover {
 }
 
 .favorite-rooms {
-  width: 30%;
+  /* width: 30%; */
+  width: 100%;
+  height: auto;
+  flex-wrap: wrap;
 }
 
 .favorite-rooms h3 {
@@ -76,6 +80,8 @@ button:hover {
 .rooms-container {
   display: flex;
   gap: 10px;
+  flex-wrap: wrap;
+
 }
 
 .room-item img {
@@ -104,25 +110,44 @@ button:hover {
 }
 
 .logout {
-  width: 100px;
-  height: 40px;
+  width: 100%;
+  height: 45px;
+  border-radius: 10px;
   background-color: var(--primary-color);
-
 }
 
 .logout:hover {
   background-color: var(--primary-color-dark);
 }
 
-.bookings-container{
+.bookings-container {
   display: flex;
   gap: 3rem;
+  width: 100%;
+  height: auto;
+  flex-wrap: wrap;
 }
 
-#confirmed{
+#confirmed {
   color: green;
 }
 
-#pending{
+#pending {
   color: orange;
+}
+
+.room-item {
+  background-color: white;
+  border-radius: 10px;
+  min-width: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.room-item img {
+  min-height: 150px;
+  min-width: 150px;
 }
