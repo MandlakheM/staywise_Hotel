@@ -27,39 +27,38 @@ function App() {
         <Navbar isLoggedIn={isLoggedIn} userType={userType} />
 
         <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<SignUp />} />
           {!isLoggedIn && (
             <>
-              <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<SignUp />} />
-              <Route path="/home" element={<Home />} />
+              <Route path="/gallery" element={<Gallery />} />
+              <Route path="/about" element={<About />} />
             </>
           )}
 
+          <Route path="/home" element={<Home />} />
+
+          <Route path="/" element={<Home />} />
+
           <Route element={<ProtectedRoute />}>
-            <Route path="/login" element={<Navigate to="/" />} />
-            <Route path="/register" element={<Navigate to="/" />} />
-            {userType != "Admin" ? (
-              <>
-                <Route path="/" element={<Navigate to="/userDetails" />} />
-                <Route path="/userDetails" element={<UserDetails />} />
-                {/* <Route path="/booking" element={<Booking />} /> */}
-                <Route path="/admin-dashboard" element={<Navigate to="/" />} />
-              </>
+            {isLoggedIn ? (
+              userType !== "Admin" ? (
+                <>
+                  <Route path="/userDetails" element={<UserDetails />} />
+                  <Route path="/admin-dashboard" element={<Navigate to="/" />} />
+                </>
+              ) : (
+                <>
+                  <Route path="/admin-dashboard" element={<AdminHome />} />
+                  <Route path="/userDetails" element={<Navigate to="/" />} />
+                </>
+              )
             ) : (
-              <>
-                <Route path="/" element={<Navigate to="/admin-dashboard" />} />
-                <Route path="/userDetails" element={<Navigate to="/" />} />
-                {/* <Route path="/booking" element={<Navigate to="/" />} /> */}
-                <Route path="/admin-dashboard" element={<AdminHome />} />
-              </>
+              <Route path="*" element={<Navigate to="/login" />} />
             )}
           </Route>
 
-          <Route path="/room/:roomId" element={<IndividualRoom />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/home" element={<Home />} />
           <Route path="*" element={<Navigate to="/" />} />
-          <Route path="/gallery" element={<Gallery />} />
         </Routes>
       </div>
     </Router>

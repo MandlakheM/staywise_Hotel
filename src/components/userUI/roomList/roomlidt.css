@@ -13,8 +13,10 @@
   width: 100%;
   /* overflow: scroll; */
   display: flex;
-  flex-wrap: wrap;
-  gap: 2rem;
+  align-items: center;
+  /* flex-wrap: wrap; */
+  gap: 5rem;
+  /* justify-content: space-around; */
 }
 
 /* .mapContainer {
@@ -34,29 +36,38 @@
 }
 
 .filters {
+  background-color: #fff;
   display: flex;
   padding-right: 2rem;
   align-items: center;
   justify-content: space-between;
   /* position: relative; */
+  width: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .sticky {
-  background-color: var(--white);
+  align-self: self-start;
+  /* background-color: var(--white); */
   position: sticky;
   top: 0;
-  z-index: 1;
+  width: 20%;
+  border-radius: 15px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  background-color: white;
+  min-height: 430px;
   padding: 10px;
-  width: 100%;
 }
 
-.minprice input,
+/* .minprice input,
 .maxprice input,
 .bedCount input,
 .bathroomCount input {
   height: 1.5rem;
-  width: 5rem;
-}
+  width: 100%;
+} */
 
 .minprice,
 .maxprice,
@@ -84,12 +95,12 @@
 
 .accomList {
   height: 100vh;
-  width: 100%;
+  width: 90%;
   /* overflow: scroll; */
   display: flex;
   flex-wrap: wrap;
   gap: 2rem;
-  padding-left: 10%;
+  /* margin-left: 50px; */
 }
 
 .roomCard {
