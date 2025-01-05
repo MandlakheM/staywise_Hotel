@@ -64,7 +64,7 @@ function AddRoomModal({ deactivateModal, currentAccommodation }) {
               console.log("Upload is running");
               break;
             default:
-              break;   
+              break;
           }
         },
         (error) => {
@@ -164,8 +164,8 @@ function AddRoomModal({ deactivateModal, currentAccommodation }) {
 
             <div>
               <label>Choose Room Amenities (Optional) </label>
-              <div>
-                
+              <div className="checkboxes">
+                <label htmlFor="roomService">24hrs room services</label>
                 <input
                   type="checkbox"
                   name="roomService"
@@ -173,9 +173,10 @@ function AddRoomModal({ deactivateModal, currentAccommodation }) {
                   value={room.roomService}
                   onChange={handleChange}
                 />
-                <label htmlFor="roomService">24hrs room services</label>
               </div>
-              <div>
+              <div className="checkboxes">
+                <label htmlFor="balcony">balcony</label>
+
                 <input
                   type="checkbox"
                   name="balcony"
@@ -183,9 +184,10 @@ function AddRoomModal({ deactivateModal, currentAccommodation }) {
                   value={room.balcony}
                   onChange={handleChange}
                 />
-                <label htmlFor="balcony">balcony</label>
               </div>
-              <div>
+              <div className="checkboxes">
+                <label htmlFor="cityView">city view</label>
+
                 <input
                   type="checkbox"
                   name="cityView"
@@ -193,9 +195,10 @@ function AddRoomModal({ deactivateModal, currentAccommodation }) {
                   value={room.cityView}
                   onChange={handleChange}
                 />
-                <label htmlFor="cityView">city view</label>
               </div>{" "}
-              <div>
+              <div className="checkboxes">
+                <label htmlFor="forestView">forest view</label>
+
                 <input
                   type="checkbox"
                   name="forestView"
@@ -203,9 +206,10 @@ function AddRoomModal({ deactivateModal, currentAccommodation }) {
                   value={room.forestView}
                   onChange={handleChange}
                 />
-                <label htmlFor="forestView">forest view</label>
               </div>{" "}
-              <div>
+              <div className="checkboxes">
+                <label htmlFor="airConditioned">air conditioned</label>
+
                 <input
                   type="checkbox"
                   name="airConditioned"
@@ -213,9 +217,10 @@ function AddRoomModal({ deactivateModal, currentAccommodation }) {
                   value={room.airConditioned}
                   onChange={handleChange}
                 />
-                <label htmlFor="airConditioned">air conditioned</label>
               </div>{" "}
-              <div>
+              <div className="checkboxes">
+                <label htmlFor="tv">TV</label>
+
                 <input
                   type="checkbox"
                   name="tv"
@@ -223,9 +228,10 @@ function AddRoomModal({ deactivateModal, currentAccommodation }) {
                   value={room.tv}
                   onChange={handleChange}
                 />
-                <label htmlFor="tv">TV</label>
               </div>{" "}
-              <div>
+              <div className="checkboxes">
+                <label htmlFor="wifi">free Wifi</label>
+
                 <input
                   type="checkbox"
                   name="wifi"
@@ -233,9 +239,10 @@ function AddRoomModal({ deactivateModal, currentAccommodation }) {
                   value={room.wifi}
                   onChange={handleChange}
                 />
-                <label htmlFor="wifi">free Wifi</label>
               </div>{" "}
-              <div>
+              <div className="checkboxes">
+                <label htmlFor="oceanView">ocean view</label>
+
                 <input
                   type="checkbox"
                   name="oceanView"
@@ -243,9 +250,10 @@ function AddRoomModal({ deactivateModal, currentAccommodation }) {
                   value={room.oceanView}
                   onChange={handleChange}
                 />
-                <label htmlFor="oceanView">ocean view</label>
               </div>{" "}
-              <div>
+              <div className="checkboxes">
+                <label htmlFor="mountainView">mountain view</label>
+
                 <input
                   type="checkbox"
                   name="mountainView"
@@ -253,9 +261,10 @@ function AddRoomModal({ deactivateModal, currentAccommodation }) {
                   value={room.mountainView}
                   onChange={handleChange}
                 />
-                <label htmlFor="mountainView">mountain view</label>
               </div>{" "}
-              <div>
+              <div className="checkboxes">
+                <label htmlFor="soundProofed">sound proofed</label>
+
                 <input
                   type="checkbox"
                   name="soundProofed"
@@ -263,7 +272,6 @@ function AddRoomModal({ deactivateModal, currentAccommodation }) {
                   value={room.soundProofed}
                   onChange={handleChange}
                 />
-                <label htmlFor="soundProofed">sound proofed</label>
               </div>
             </div>
 

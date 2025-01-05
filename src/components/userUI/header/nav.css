@@ -17,7 +17,6 @@ ul {
   gap: 2rem;
   justify-content: center;
   list-style: none;
-  
 }
 
 li {
@@ -48,10 +47,12 @@ li:hover {
 .authActions {
   background-color: var(--primary-color);
   border-radius: 10px;
-  color: var(--white);
+  color: #ffff;
 }
 
-
+.links {
+  color: white;
+}
 
 .hamburger {
   display: none;
@@ -84,7 +85,7 @@ li:hover {
     display: none;
   }
 
-  .navbar ul.open {
+  .navbar ul, .open {
     display: flex;
   }
 

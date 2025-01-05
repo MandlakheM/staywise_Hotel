@@ -7,6 +7,7 @@ function Navbar({ isLoggedIn, userType }) {
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
+    // console.log(isOpen)
   };
   return (
     <nav className="nav gutter">
@@ -43,12 +44,16 @@ function Navbar({ isLoggedIn, userType }) {
       )}
       {!isLoggedIn && (
         <div className="auth">
-          <ul className={`nav-links ${isOpen ? "open" : ""}`}>
+          <ul className={`${isOpen ? "open" : ""}`}>
             <button className="authActions">
-              <Link to="/login">Login</Link>
+              <Link to="/login" className="links">
+                Login
+              </Link>
             </button>
             <button className="authActions">
-              <Link to="/register">Register</Link>
+              <Link to="/register" className="links">
+                Register
+              </Link>
             </button>
           </ul>
         </div>

@@ -182,16 +182,16 @@ function UserProfile() {
                     alt={`Booking`}
                   />
                   <h5>{booking.roomTitle || "Room Title"}</h5>
-                  <p>Check-in: {booking.checkinDate}</p>
-                  <p>Checkout: {booking.checkoutDate}</p>
-                  <p>
+                  <span>Check-in: {booking.checkinDate}</span>
+                  <span>Checkout: {booking.checkoutDate}</span>
+                  <span>
                     Booking status:{" "}
                     {booking.status ? (
                       <span id="confirmed">Confirmed</span>
                     ) : (
                       <span id="pending">pending</span>
                     )}
-                  </p>
+                  </span>
                   {booking.status ? (
                     <button
                       type="button"

@@ -35,7 +35,7 @@ function Accommodation() {
     };
 
     fetchData();
-  }, []);
+  }, [modal]);
 
   const activateModal = () => {
     setModal(true);
