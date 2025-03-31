@@ -126,7 +126,7 @@ function BookingForm({
         if (userData && userData.email) {
           try {
             await axios.post("http://localhost:3030/api/send", {
-              from: "mangumtamandilakhe7@gmail.com",
+              from: "staywisehotels@gmail.com",
               to: userData.email,
               subject: "Booking Confirmation",
               message: `Dear customer, your booking for ${roomDetails.roomTitle} has been made and is awaiting approval.`,
