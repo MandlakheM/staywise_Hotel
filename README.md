@@ -17,6 +17,10 @@ Admins can add new accommodations with details like room type, capacity, price, 
 Admins can view reservations, including check-in and check-out dates, guest details, room details, etc..
 
 
+## Live Site
+https://stay-wise-hotels.netlify.app/home
+
+
 ## SCREENSHOTS
 
 Home page view
