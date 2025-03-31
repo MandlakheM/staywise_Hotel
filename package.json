@@ -3,14 +3,13 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": ".",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "start": "concurrently \"npm run dev\" \"node server.cjs\"",
-    "postbuild": "mkdir -p build && cp public/_redirects build/_redirects"
+    "start": "concurrently \"npm run dev\" \"node server.cjs\""
+  
   },
   "dependencies": {
     "@emotion/react": "^11.13.3",
