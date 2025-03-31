@@ -60,6 +60,8 @@ function App() {
           <Route path="/home" element={<Home />} />
           <Route path="*" element={<Navigate to="/" />} />
           <Route path="/gallery" element={<Gallery />} />
+
+          <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </div>
     </Router>
