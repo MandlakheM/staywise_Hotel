@@ -54,3 +54,17 @@ npm run dev
 
 admin@example.com
 admin123
+
+```
+
+## env content
+
+REACT_APP_FIREBASE_API_KEY= AIzaSyC4fBIlEoAGgZXysUXOUG9gR0kjuX1e63o
+
+REACT_APP_FIREBASE_APP_ID = b185d7c1f6488aec47e766
+
+EMAIL_USER = "staywisehotels@gmail.com"
+
+EMAIL_PASS = "iqtc xwcx gjmc mcmw"
+
+STRIPE_API = "pk_test_51PvyjyEfeDWghDPt7VoSfmQMd8KyIBfZLxW6FSI3aaH974SQGLN3CL4MOdZ5YhFyiYR9WU9weKc3A0rh9s9skIYf00b8hDIMOe"
