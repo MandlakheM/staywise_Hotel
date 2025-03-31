@@ -125,7 +125,7 @@ function BookingForm({
 
         if (userData && userData.email) {
           try {
-            await axios.post("http://localhost:3030/api/send", {
+            await axios.post("https://staywise-hotel.onrender.com/api/send", {
               from: "staywisehotels@gmail.com",
               to: userData.email,
               subject: "Booking Confirmation",
