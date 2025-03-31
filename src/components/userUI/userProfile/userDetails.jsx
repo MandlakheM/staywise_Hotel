@@ -9,7 +9,7 @@ import {
   where,
   updateDoc,
 } from "firebase/firestore";
-import "./UserProfile.css";
+import "./userProfile.css";
 import { signOut } from "firebase/auth";
 import { fetchBookings } from "../../../Redux/booking/bookingSlice";
 import { useDispatch, useSelector } from "react-redux";
